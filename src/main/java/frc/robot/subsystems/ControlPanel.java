@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import edu.wpi.first.wpilibj.Solenoid;
 
 public class ControlPanel extends SubsystemBase {
@@ -26,7 +27,7 @@ public class ControlPanel extends SubsystemBase {
   public ControlPanel() {
     super();
 
-    m_Solenoid3 = new Solenoid(3);
+    m_Solenoid3 = new Solenoid(Constants.SOLENOID_3_ID);
 
     spinnerMotor = new CANSparkMax(13, MotorType.kBrushed);
     spinnerMotor.restoreFactoryDefaults();
