@@ -11,53 +11,43 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.ColorDisplay.ControlPanelWedge;
 import edu.wpi.first.wpilibj.Solenoid;
 
 public class ControlPanel extends SubsystemBase {
 
   private Solenoid m_Solenoid3;
-  
+
   private CANSparkMax spinnerMotor;
-  //Whatever sensor to detect color
+  // Whatever sensor to detect color
 
   /**
    * Creates a new ControlPanel.
    */
   public ControlPanel() {
     super();
-    if(!SubsystemConstants.REAL_ROBOT){
-      return;
-    }
 
     m_Solenoid3 = new Solenoid(3);
-
 
     spinnerMotor = new CANSparkMax(13, MotorType.kBrushed);
     spinnerMotor.restoreFactoryDefaults();
   }
 
-  public ControlPanelWedge getCurrentColor(){
-    //Put sensor code here
-    return null;
-  }
-
-  public void stop(){
-    if(spinnerMotor != null){
+  public void stop() {
+    if (spinnerMotor != null) {
       spinnerMotor.set(0);
     }
   }
 
-  public void extend(){
-    m_Solenoid3.set(true);  
+  public void extend() {
+    m_Solenoid3.set(true);
   }
 
-  public void retract(){
-    m_Solenoid3.set(false);  
+  public void retract() {
+    m_Solenoid3.set(false);
   }
 
-  public void spin(){
-    spinnerMotor.set(.5);  //half power magic number 
+  public void spin() {
+    spinnerMotor.set(.5); // half power magic number
   }
 
   @Override

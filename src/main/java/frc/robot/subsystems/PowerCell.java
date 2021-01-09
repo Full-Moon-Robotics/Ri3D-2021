@@ -7,62 +7,51 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import edu.wpi.first.wpilibj.Compressor;
 
-
 public class PowerCell extends SubsystemBase {
-    /**
-     * Intake.
-     */
-    
-      private  CANSparkMax intakeMotor;
-      private  CANSparkMax beltMotor;
-      private CANSparkMax outputMotor;
-      private  Compressor m_Compressor;
+  /**
+   * Intake.
+   */
 
+  private CANSparkMax intakeMotor;
+  private CANSparkMax beltMotor;
+  private CANSparkMax outputMotor;
 
-    public PowerCell() {
-      super();
+  public PowerCell() {
+    super();
 
-      if(!SubsystemConstants.REAL_ROBOT){
-        return;
-      }
-      
-      intakeMotor = new CANSparkMax(12, MotorType.kBrushed); //changed to reflect final motor
-      beltMotor = new CANSparkMax(11, MotorType.kBrushed);
-      outputMotor = new CANSparkMax(14, MotorType.kBrushed);
-  
-      intakeMotor.restoreFactoryDefaults();
+    intakeMotor = new CANSparkMax(12, MotorType.kBrushed); // changed to reflect final motor
+    beltMotor = new CANSparkMax(11, MotorType.kBrushed);
+    outputMotor = new CANSparkMax(14, MotorType.kBrushed);
 
-      beltMotor.restoreFactoryDefaults();
+    intakeMotor.restoreFactoryDefaults();
 
-      outputMotor.restoreFactoryDefaults();
+    beltMotor.restoreFactoryDefaults();
+    beltMotor.setInverted(true);
 
-      
-      m_Compressor = new Compressor();
-      m_Compressor.setClosedLoopControl(true);
-            
-  
-    }
-    public void run_intake(double speed){
-      if(intakeMotor != null){
-        intakeMotor.set(-speed);
-        outputMotor.set(speed/2);
-      }
-    }
-    
-    public void run_output(double speed){
-      if(intakeMotor != null){
-        outputMotor.set(-speed);
-      }
-    }
-    public void run_belt(double speed){
-      if(intakeMotor != null){
-        beltMotor.set(speed);
-      }
-    }
-    
+    outputMotor.restoreFactoryDefaults();
+  }
 
-    @Override
-    public void periodic() {
-      // This method will be called once per scheduler run
+  public void run_intake(double speed) {
+    if (intakeMotor != null) {
+      intakeMotor.set(-speed);
+      outputMotor.set(speed / 2);
     }
   }
+
+  public void run_output(double speed) {
+    if (intakeMotor != null) {
+      outputMotor.set(-speed);
+    }
+  }
+
+  public void run_belt(double speed) {
+    if (intakeMotor != null) {
+      beltMotor.set(speed);
+    }
+  }
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
+}
