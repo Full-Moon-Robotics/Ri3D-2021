@@ -13,11 +13,11 @@ import frc.robot.subsystems.ControlPanel;
 //Spin the control panel
 public class RaiseControlPanel extends CommandBase {
   private final ControlPanel controlPanel;
+
   /**
    * Creates a new ControlPanelRevolutions.
    */
   public RaiseControlPanel(ControlPanel controlPanel) {
-    // Use addRequirements() here to declare subsystem dependencies.
     this.controlPanel = controlPanel;
     addRequirements(controlPanel);
 

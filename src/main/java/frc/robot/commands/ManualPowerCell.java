@@ -13,14 +13,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.PowerCell;
 
-
 /**
-* Manipulate power cells manually 
-*/
+ * Manipulate power cells manually
+ */
 public class ManualPowerCell extends CommandBase {
   private final PowerCell m_powercell;
   private final DoubleSupplier m_inspeed;
   private final DoubleSupplier m_outspeed;
+
   public ManualPowerCell(DoubleSupplier inspeed, DoubleSupplier outspeed, PowerCell powerCell) {
     m_powercell = powerCell;
     m_inspeed = inspeed;
@@ -31,9 +31,9 @@ public class ManualPowerCell extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    if (m_outspeed.getAsDouble() == 0){
+    if (m_outspeed.getAsDouble() == 0) {
       m_powercell.run_intake(m_inspeed.getAsDouble());
-    }else if (m_inspeed.getAsDouble() == 0){
+    } else if (m_inspeed.getAsDouble() == 0) {
       m_powercell.run_output(m_outspeed.getAsDouble());
     }
     m_powercell.run_belt(Math.max(m_inspeed.getAsDouble(), m_outspeed.getAsDouble()));
@@ -50,7 +50,7 @@ public class ManualPowerCell extends CommandBase {
   public void end(boolean interrupted) {
     m_powercell.run_intake(0);
     m_powercell.run_output(0);
-    m_powercell.run_belt(0);  
+    m_powercell.run_belt(0);
   }
 
 }
