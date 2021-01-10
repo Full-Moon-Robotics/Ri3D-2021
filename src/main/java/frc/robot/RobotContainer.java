@@ -20,8 +20,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.ControlPanelRevolutions;
 import frc.robot.commands.Intake;
-import frc.robot.commands.RaiseControlPanel;
-import frc.robot.commands.LowerControlPanel;
+
 import frc.robot.commands.ManualPowerCell;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
@@ -94,8 +93,6 @@ public class RobotContainer {
     intakeTrigger.whileActiveOnce(new Intake(m_powercell));
 
     new JoystickButton(controller, 3).whileHeld(new ControlPanelRevolutions(m_controlPanel));
-    new JoystickButton(controller, 4).whenPressed(new RaiseControlPanel(m_controlPanel));
-    new JoystickButton(controller, 2).whenPressed(new LowerControlPanel(m_controlPanel));
     new JoystickButton(controller, 1).whileHeld(() -> {
       new PowerCell().run_belt(-0.5);
     });
