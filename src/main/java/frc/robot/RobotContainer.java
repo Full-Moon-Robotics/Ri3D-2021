@@ -44,6 +44,8 @@ public class RobotContainer {
   final DoubleSupplier leftsupply = () -> controller.getRawAxis(1);
   final DoubleSupplier rightsupply = () -> controller.getRawAxis(5);
 
+  final DoubleSupplier controlPanelSupplier = () -> controller.getRawAxis(0); 
+
   final DoubleSupplier intakeSuppier = () -> {
     if (controller.getRawButton(3)) { // Hold triangle for elevator
       return 0;
