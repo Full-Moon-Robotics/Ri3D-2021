@@ -18,8 +18,8 @@ import frc.robot.subsystems.DriveTrain;
  */
 public class TankDrive extends CommandBase {
   private final DriveTrain m_drivetrain;
-  private final DoubleSupplier m_left;
-  private final DoubleSupplier m_right;
+  private final DoubleSupplier m_throttle;
+  private final DoubleSupplier m_turn;
 
   /**
    * Creates a new TankDrive command.
@@ -28,17 +28,17 @@ public class TankDrive extends CommandBase {
    * @param right      The control input for the right sight of the drive
    * @param drivetrain The drivetrain subsystem to drive
    */
-  public TankDrive(DoubleSupplier left, DoubleSupplier right, DriveTrain drivetrain) {
+  public TankDrive(DoubleSupplier throttle, DoubleSupplier turn, DriveTrain drivetrain) {
     m_drivetrain = drivetrain;
-    m_left = left;
-    m_right = right;
+    m_throttle = throttle;
+    m_turn = turn;
     addRequirements(m_drivetrain);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    m_drivetrain.drive(-m_left.getAsDouble(), -m_right.getAsDouble());
+    m_drivetrain.drive(m_throttle.getAsDouble(), m_turn.getAsDouble());
   }
 
   // Make this return true when this Command no longer needs to run execute()
