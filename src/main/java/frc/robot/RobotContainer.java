@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.Compressor;
 import frc.robot.commands.TankDrive;
-import frc.robot.commands.ControlPanelRevolutions;
+import frc.robot.commands.DefaultControlPanel;
 import frc.robot.commands.Intake;
 
 import frc.robot.commands.ManualPowerCell;
@@ -48,7 +48,7 @@ public class RobotContainer {
   final JoystickAxis throttleAxis = new JoystickAxis(controller, Constants.THROTTLE_AXIS, 1, 0, 0, 0);
   final JoystickAxis turnAxis = new JoystickAxis(controller, Constants.TURN_AXIS, 1, 0, 0, 0);
 
-  final JoystickAxis controlPanelAxis = new JoystickAxis(controller, Constants.CONTROL_PANEL_AXIS, 1, 0, 0, 0);
+  final JoystickAxis controlPanelAxis = new JoystickAxis(controller, Constants.CONTROL_PANEL_AXIS, 0.5, 0, 0, 0.1);
 
   // axis suppliers
   final DoubleSupplier throttleSupply = () -> throttleAxis.get();
@@ -79,6 +79,7 @@ public class RobotContainer {
     configureButtonBindings();
 
     m_drivetrain.setDefaultCommand(new TankDrive(throttleSupply, turnSupply, m_drivetrain));
+    m_controlPanel.setDefaultCommand(new DefaultControlPanel(m_controlPanel, controlPanelSupplier));
     m_compressor.setClosedLoopControl(true);
   }
 
@@ -92,7 +93,7 @@ public class RobotContainer {
 
     intakeTrigger.whileActiveOnce(new Intake(m_powercell));
 
-    new JoystickButton(controller, 3).whileHeld(new ControlPanelRevolutions(m_controlPanel));
+    new JoystickButton(controller, 3).whileHeld(new DefaultControlPanel(m_controlPanel, controlPanelSupplier));
     new JoystickButton(controller, 1).whileHeld(() -> {
       new PowerCell().run_belt(-0.5);
     });

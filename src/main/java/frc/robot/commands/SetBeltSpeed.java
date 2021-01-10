@@ -14,6 +14,7 @@ public class SetBeltSpeed extends InstantCommand {
 
         m_powerCell = pcell;
         m_speed = speed;
+        addRequirements(pcell);
     }
 
     @Override
