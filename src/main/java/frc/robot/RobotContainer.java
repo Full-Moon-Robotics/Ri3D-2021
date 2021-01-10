@@ -21,7 +21,6 @@ import frc.robot.commands.TankDrive;
 import frc.robot.commands.DefaultControlPanel;
 import frc.robot.commands.Intake;
 
-import frc.robot.commands.ManualPowerCell;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.PowerCell;
@@ -60,17 +59,7 @@ public class RobotContainer {
     return controller.getRawAxis(Constants.INTAKE_AXIS) > 0.1;
   });
 
-  final DoubleSupplier outputSupplier = () -> {
-    if (controller.getRawButton(3)) {
-      return 0;
-    } else {
-      if (controller.getRawButton(3)) { // (Hold Triangle to reverse)
-        return -(controller.getRawAxis(4) + 1) / 2;
-      } else {
-        return (controller.getRawAxis(4) + 1) / 2;
-      }
-    }
-  };
+  // TODO shooter supplier
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -93,7 +82,6 @@ public class RobotContainer {
 
     intakeTrigger.whileActiveOnce(new Intake(m_powercell));
 
-    new JoystickButton(controller, 3).whileHeld(new DefaultControlPanel(m_controlPanel, controlPanelSupplier));
     new JoystickButton(controller, 1).whileHeld(() -> {
       new PowerCell().run_belt(-0.5);
     });
