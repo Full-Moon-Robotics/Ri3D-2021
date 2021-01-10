@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj.LinearFilter;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+
 import frc.robot.Constants;
 
 public class Drivetrain extends SubsystemBase {
@@ -31,6 +32,7 @@ public class Drivetrain extends SubsystemBase {
    */
 
   private AnalogGyro m_gyro = new AnalogGyro(0);
+
   private LinearFilter m_gyroFilter = LinearFilter.singlePoleIIR(0.06, 0.02);
 
   private CANSparkMax m_leftMotor;
@@ -48,6 +50,7 @@ public class Drivetrain extends SubsystemBase {
   private SimpleMotorFeedforward m_rightFF = new SimpleMotorFeedforward(0, 0);
 
   private DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(Constants.DRIVE_TRACK_WIDTH);
+
   private DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(getGyroRotation());
   
   public Drivetrain() {
@@ -125,6 +128,7 @@ public class Drivetrain extends SubsystemBase {
   public void resetPose() {
     m_leftEncoder.setPosition(0);
     m_rightEncoder.setPosition(0);
+
     m_odometry.resetPosition(new Pose2d(), getGyroRotation());
   }
 
@@ -135,9 +139,8 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // update the drivetrain's pose estimate
-    
     m_odometry.update(getGyroRotation(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
-  
+    
     // publish debug odometry values
     SmartDashboard.putNumber("odometry_x", m_odometry.getPoseMeters().getX());
     SmartDashboard.putNumber("odometry_y", m_odometry.getPoseMeters().getY());

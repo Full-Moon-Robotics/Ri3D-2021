@@ -3,11 +3,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.PowerCell;
 
-public class Intake extends CommandBase {
+public class Collect extends CommandBase {
 
     private PowerCell m_pPowerCell;
 
-    public Intake(PowerCell pcell) {
+    public Collect(PowerCell pcell) {
         super();
         m_pPowerCell = pcell;
         addRequirements(pcell);

@@ -30,7 +30,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DefaultControlPanel;
 import frc.robot.commands.DrivePath;
-import frc.robot.commands.Intake;
+import frc.robot.commands.Collect;
 import frc.robot.commands.ResetDrivePose;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.TankDrive;
@@ -116,7 +116,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    intakeTrigger.whileActiveOnce(new Intake(m_powercell));
+    intakeTrigger.whileActiveOnce(new Collect(m_powercell));
     shootTrigger.whileActiveOnce(new Shoot(m_shooter));
 
     new JoystickButton(controller, 1).whileHeld(() -> {
