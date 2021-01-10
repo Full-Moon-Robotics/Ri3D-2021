@@ -22,6 +22,7 @@ public class ManualPowerCell extends CommandBase {
   private final DoubleSupplier m_outspeed;
 
   public ManualPowerCell(DoubleSupplier inspeed, DoubleSupplier outspeed, PowerCell powerCell) {
+    super();
     m_powercell = powerCell;
     m_inspeed = inspeed;
     m_outspeed = outspeed;

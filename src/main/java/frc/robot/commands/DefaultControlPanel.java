@@ -21,10 +21,11 @@ public class DefaultControlPanel extends CommandBase {
    * Creates a new ControlPanelRevolutions.
    */
   public DefaultControlPanel(ControlPanel controlPanel, DoubleSupplier axis) {
+    super();
+
     m_controlPanel = controlPanel;
     m_axis = axis;
     addRequirements(controlPanel);
-
   }
 
   // Called when the command is initially scheduled.

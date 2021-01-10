@@ -26,12 +26,14 @@ public final class Constants {
     public static final int INTAKE_MOTOR_ID = 12;
     public static final int SPINNER_MOTOR_ID = 13;
     public static final int OUTPUT_MOTOR_ID = 14;
+    public static final int FLYWHEEL_MOTOR_ID = 14;
 
     // Axes
     public static final int THROTTLE_AXIS = 1;
     public static final int TURN_AXIS = 2;
     public static final int CONTROL_PANEL_AXIS = 0;
     public static final int INTAKE_AXIS = 3;
+    public static final int SHOOT_AXIS = 4;
 
     // Drivetrain
     public static final double DRIVE_GEAR_RATIO = 7/58;
@@ -42,4 +44,13 @@ public final class Constants {
     public static final double DRIVE_KV = 0; // TODO CHARACTERIZE
 
     public static final double DRIVE_TOP_SPEED = (12 - DRIVE_KS) / DRIVE_KV;    
+
+    public static final double AUTO_MAX_VELOCITY = 3;
+    public static final double AUTO_MAX_ACCEL = 4;
+    public static final double AUTO_MAX_CENTRIPETAL_ACCEL = 2;
+
+    // Shooter
+    public static final double FLYWHEEL_TOLERANCE = 100;
+    public static final double FLYWHEEL_KS = 0;
+    public static final double FLYWHEEL_KV = 0;
 }

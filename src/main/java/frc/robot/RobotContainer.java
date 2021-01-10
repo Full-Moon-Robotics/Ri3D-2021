@@ -8,6 +8,8 @@
 package frc.robot;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -16,9 +18,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.constraint.CentripetalAccelerationConstraint;
 //wpilibj.buttons
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -27,10 +32,12 @@ import frc.robot.commands.DefaultControlPanel;
 import frc.robot.commands.DrivePath;
 import frc.robot.commands.Collect;
 import frc.robot.commands.ResetDrivePose;
+import frc.robot.commands.Shoot;
 import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.PowerCell;
+import frc.robot.subsystems.Shooter;
 import frc.robot.util.JoystickAxis;
 
 /**
@@ -45,6 +52,7 @@ public class RobotContainer {
   final Drivetrain m_drivetrain = new Drivetrain();
   final PowerCell m_powercell = new PowerCell();
   final ControlPanel m_controlPanel = new ControlPanel();
+  final Shooter m_shooter = new Shooter();
   final Compressor m_compressor = new Compressor();
 
   final Joystick controller = new Joystick(0);
@@ -66,7 +74,13 @@ public class RobotContainer {
     return controller.getRawAxis(Constants.INTAKE_AXIS) > 0.1;
   });
 
-  // TODO shooter supplier
+  final Trigger shootTrigger = new Trigger(() -> {
+    return controller.getRawAxis(Constants.SHOOT_AXIS) > 0.1;
+  });
+
+  TrajectoryConfig m_trajConfig = new TrajectoryConfig(Constants.AUTO_MAX_VELOCITY, Constants.AUTO_MAX_ACCEL);
+
+  SendableChooser<List<Pose2d>> m_autoChooser = new SendableChooser<List<Pose2d>>();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -74,8 +88,23 @@ public class RobotContainer {
   public RobotContainer() {
     configureButtonBindings();
 
+    // add trajectory constraints
+    m_trajConfig.setKinematics(m_drivetrain.getKinematics());
+    m_trajConfig.addConstraint(new CentripetalAccelerationConstraint(Constants.AUTO_MAX_CENTRIPETAL_ACCEL));
+
+
+    // set up autonomous trajectories
+    m_autoChooser.setDefaultOption("None", null);
+    m_autoChooser.addOption("Straight Line", Arrays.asList(new Pose2d(0, 0, new Rotation2d()), new Pose2d(3, 0, new Rotation2d())));
+    m_autoChooser.addOption("Curve",  Arrays.asList(new Pose2d(0, 0, new Rotation2d()), new Pose2d(3, 3, new Rotation2d())));
+
+    SmartDashboard.putData(m_autoChooser);
+   
+    // set default commands
     m_drivetrain.setDefaultCommand(new TankDrive(throttleSupply, turnSupply, m_drivetrain));
     m_controlPanel.setDefaultCommand(new DefaultControlPanel(m_controlPanel, controlPanelSupplier));
+
+    // enable compressor
     m_compressor.setClosedLoopControl(true);
   }
 
@@ -88,6 +117,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     intakeTrigger.whileActiveOnce(new Collect(m_powercell));
+    shootTrigger.whileActiveOnce(new Shoot(m_shooter));
 
     new JoystickButton(controller, 1).whileHeld(() -> {
       new PowerCell().run_belt(-0.5);
@@ -101,18 +131,19 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
 
-    TrajectoryConfig config = new TrajectoryConfig(Constants.DRIVE_TOP_SPEED, 3);
-    config.setKinematics(m_drivetrain.getKinematics());
-    // An ExampleCommand will run in autonomous
-    Trajectory traj = TrajectoryGenerator.generateTrajectory(
-        Arrays.asList(
-          new Pose2d(0, 0, new Rotation2d()),
-          new Pose2d(3, 3, new Rotation2d())
-        ), config);
+    List<Pose2d> waypoints = m_autoChooser.getSelected();
 
-    return new ResetDrivePose(m_drivetrain).andThen(new DrivePath(traj, m_drivetrain)).andThen(() -> {
-      m_drivetrain.stop();
-    });
+    if (waypoints != null) {
+
+      Trajectory traj = TrajectoryGenerator.generateTrajectory(waypoints, m_trajConfig);
+
+      return new ResetDrivePose(m_drivetrain).andThen(new DrivePath(traj, m_drivetrain)).andThen(() -> {
+        m_drivetrain.stop();
+      });
+
+    } else {
+      return null;
+    }
 
   }
 }
