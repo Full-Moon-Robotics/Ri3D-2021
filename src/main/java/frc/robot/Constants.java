@@ -34,12 +34,12 @@ public final class Constants {
     public static final int INTAKE_AXIS = 3;
 
     // Drivetrain
-    public static final double DRIVE_GEAR_RATIO = 0.1;
-    public static final double DRIVE_WHEEL_DIAMETER = 4.0;
-    public static final double DRIVE_TRACK_WIDTH = 1.0;
+    public static final double DRIVE_GEAR_RATIO = 7/58;
+    public static final double DRIVE_WHEEL_DIAMETER = 3.961;
+    public static final double DRIVE_TRACK_WIDTH = 1.0; // TODO CHARACTERIZE
 
-    public static final double DRIVE_KS = 0;
-    public static final double DRIVE_KV = 0;
+    public static final double DRIVE_KS = 0; // TODO CHARACTERIZE
+    public static final double DRIVE_KV = 0; // TODO CHARACTERIZE
 
     public static final double DRIVE_TOP_SPEED = (12 - DRIVE_KS) / DRIVE_KV;    
 }
