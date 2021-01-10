@@ -7,22 +7,29 @@
 
 package frc.robot;
 
+import java.util.Arrays;
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 //wpilibj.buttons
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj.Compressor;
-import frc.robot.commands.TankDrive;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DefaultControlPanel;
+import frc.robot.commands.DrivePath;
 import frc.robot.commands.Intake;
-
+import frc.robot.commands.ResetDrivePose;
+import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.ControlPanel;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.PowerCell;
 import frc.robot.util.JoystickAxis;
 
@@ -35,17 +42,17 @@ import frc.robot.util.JoystickAxis;
  */
 public class RobotContainer {
 
-  final DriveTrain m_drivetrain = new DriveTrain();
+  final Drivetrain m_drivetrain = new Drivetrain();
   final PowerCell m_powercell = new PowerCell();
   final ControlPanel m_controlPanel = new ControlPanel();
   final Compressor m_compressor = new Compressor();
 
-
   final Joystick controller = new Joystick(0);
 
   // joystick axes
-  final JoystickAxis throttleAxis = new JoystickAxis(controller, Constants.THROTTLE_AXIS, 1, 0, 0, 0);
-  final JoystickAxis turnAxis = new JoystickAxis(controller, Constants.TURN_AXIS, 1, 0, 0, 0);
+  final JoystickAxis throttleAxis = new JoystickAxis(controller, Constants.THROTTLE_AXIS, -Constants.DRIVE_TOP_SPEED,
+      20, 0, 0.2);
+  final JoystickAxis turnAxis = new JoystickAxis(controller, Constants.TURN_AXIS, -5 * Math.PI, 73, 0, 0.1);
 
   final JoystickAxis controlPanelAxis = new JoystickAxis(controller, Constants.CONTROL_PANEL_AXIS, 0.5, 0, 0, 0.1);
 
@@ -53,7 +60,7 @@ public class RobotContainer {
   final DoubleSupplier throttleSupply = () -> throttleAxis.get();
   final DoubleSupplier turnSupply = () -> turnAxis.get();
 
-  final DoubleSupplier controlPanelSupplier = () -> controlPanelAxis.get(); 
+  final DoubleSupplier controlPanelSupplier = () -> controlPanelAxis.get();
 
   final Trigger intakeTrigger = new Trigger(() -> {
     return controller.getRawAxis(Constants.INTAKE_AXIS) > 0.1;
@@ -93,7 +100,19 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+
+    TrajectoryConfig config = new TrajectoryConfig(Constants.DRIVE_TOP_SPEED, 3);
+    config.setKinematics(m_drivetrain.getKinematics());
     // An ExampleCommand will run in autonomous
-    return null;
+    Trajectory traj = TrajectoryGenerator.generateTrajectory(
+        Arrays.asList(
+          new Pose2d(0, 0, new Rotation2d()),
+          new Pose2d(3, 3, new Rotation2d())
+        ), config);
+
+    return new ResetDrivePose(m_drivetrain).andThen(new DrivePath(traj, m_drivetrain)).andThen(() -> {
+      m_drivetrain.stop();
+    });
+
   }
 }

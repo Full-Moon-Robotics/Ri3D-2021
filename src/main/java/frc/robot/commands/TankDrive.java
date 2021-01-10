@@ -9,17 +9,19 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Drivetrain;
 
 /**
  * Have the robot drive tank style.
  */
 public class TankDrive extends CommandBase {
-  private final DriveTrain m_drivetrain;
+  private final Drivetrain m_drivetrain;
   private final DoubleSupplier m_throttle;
   private final DoubleSupplier m_turn;
+  private final DifferentialDriveKinematics m_kinematics;
 
   /**
    * Creates a new TankDrive command.
@@ -28,17 +30,20 @@ public class TankDrive extends CommandBase {
    * @param right      The control input for the right sight of the drive
    * @param drivetrain The drivetrain subsystem to drive
    */
-  public TankDrive(DoubleSupplier throttle, DoubleSupplier turn, DriveTrain drivetrain) {
+  public TankDrive(DoubleSupplier throttle, DoubleSupplier turn, Drivetrain drivetrain) {
     m_drivetrain = drivetrain;
     m_throttle = throttle;
     m_turn = turn;
+    m_kinematics = drivetrain.getKinematics();
     addRequirements(m_drivetrain);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    m_drivetrain.drive(m_throttle.getAsDouble(), m_turn.getAsDouble());
+    m_drivetrain.driveClosedLoop(m_kinematics.toWheelSpeeds(
+      new ChassisSpeeds(m_throttle.getAsDouble(), 0, m_turn.getAsDouble())
+    ));
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -50,6 +55,6 @@ public class TankDrive extends CommandBase {
   // Called once after isFinished returns true
   @Override
   public void end(boolean interrupted) {
-    m_drivetrain.drive(0, 0);
+    m_drivetrain.stop();
   }
 }
