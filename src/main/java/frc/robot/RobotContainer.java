@@ -13,11 +13,13 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 //wpilibj.buttons
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.Compressor;
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.ControlPanelRevolutions;
+import frc.robot.commands.Intake;
 import frc.robot.commands.RaiseControlPanel;
 import frc.robot.commands.LowerControlPanel;
 import frc.robot.commands.ManualPowerCell;
@@ -55,17 +57,9 @@ public class RobotContainer {
 
   final DoubleSupplier controlPanelSupplier = () -> controlPanelAxis.get(); 
 
-  final DoubleSupplier intakeSuppier = () -> {
-    if (controller.getRawButton(3)) { // Hold triangle for elevator
-      return 0;
-    } else {
-      if (controller.getRawButton(1)) { // (Hold X to reverse)
-        return -(controller.getRawAxis(3) + 1) / 2;
-      } else {
-        return (controller.getRawAxis(3) + 1) / 2;
-      }
-    }
-  };
+  final Trigger intakeTrigger = new Trigger(() -> {
+    return controller.getRawAxis(Constants.INTAKE_AXIS) > 0.1;
+  });
 
   final DoubleSupplier outputSupplier = () -> {
     if (controller.getRawButton(3)) {
@@ -86,7 +80,6 @@ public class RobotContainer {
     configureButtonBindings();
 
     m_drivetrain.setDefaultCommand(new TankDrive(throttleSupply, turnSupply, m_drivetrain));
-    m_powercell.setDefaultCommand(new ManualPowerCell(intakeSuppier, outputSupplier, m_powercell));
     m_compressor.setClosedLoopControl(true);
   }
 
@@ -97,6 +90,9 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
+    intakeTrigger.whileActiveOnce(new Intake(m_powercell));
+
     new JoystickButton(controller, 3).whileHeld(new ControlPanelRevolutions(m_controlPanel));
     new JoystickButton(controller, 4).whenPressed(new RaiseControlPanel(m_controlPanel));
     new JoystickButton(controller, 2).whenPressed(new LowerControlPanel(m_controlPanel));

@@ -19,4 +19,5 @@ public final class Constants {
     public static final int THROTTLE_AXIS = 1;
     public static final int TURN_AXIS = 2;
     public static final int CONTROL_PANEL_AXIS = 0;
+    public static final int INTAKE_AXIS = 3;
 }
