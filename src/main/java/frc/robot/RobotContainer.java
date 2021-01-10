@@ -32,10 +32,12 @@ import frc.robot.commands.DefaultControlPanel;
 import frc.robot.commands.DrivePath;
 import frc.robot.commands.Intake;
 import frc.robot.commands.ResetDrivePose;
+import frc.robot.commands.Shoot;
 import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.PowerCell;
+import frc.robot.subsystems.Shooter;
 import frc.robot.util.JoystickAxis;
 
 /**
@@ -50,6 +52,7 @@ public class RobotContainer {
   final Drivetrain m_drivetrain = new Drivetrain();
   final PowerCell m_powercell = new PowerCell();
   final ControlPanel m_controlPanel = new ControlPanel();
+  final Shooter m_shooter = new Shooter();
   final Compressor m_compressor = new Compressor();
 
   final Joystick controller = new Joystick(0);
@@ -71,7 +74,9 @@ public class RobotContainer {
     return controller.getRawAxis(Constants.INTAKE_AXIS) > 0.1;
   });
 
-  // TODO shooter supplier
+  final Trigger shootTrigger = new Trigger(() -> {
+    return controller.getRawAxis(Constants.SHOOT_AXIS) > 0.1;
+  });
 
   TrajectoryConfig m_trajConfig = new TrajectoryConfig(Constants.AUTO_MAX_VELOCITY, Constants.AUTO_MAX_ACCEL);
 
@@ -112,6 +117,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     intakeTrigger.whileActiveOnce(new Intake(m_powercell));
+    shootTrigger.whileActiveOnce(new Shoot(m_shooter));
 
     new JoystickButton(controller, 1).whileHeld(() -> {
       new PowerCell().run_belt(-0.5);

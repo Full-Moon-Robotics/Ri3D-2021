@@ -33,6 +33,7 @@ public final class Constants {
     public static final int TURN_AXIS = 2;
     public static final int CONTROL_PANEL_AXIS = 0;
     public static final int INTAKE_AXIS = 3;
+    public static final int SHOOT_AXIS = 4;
 
     // Drivetrain
     public static final double DRIVE_GEAR_RATIO = 7/58;

@@ -8,6 +8,7 @@ public class ResetDrivePose extends InstantCommand {
     private Drivetrain m_drivetrain;
 
     public ResetDrivePose(Drivetrain dt) {
+        super();
         m_drivetrain = dt;
     }
 
