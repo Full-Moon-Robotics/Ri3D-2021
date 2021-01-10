@@ -50,9 +50,9 @@ public class DriveTrain extends SubsystemBase {
 
   }
 
-  public void drive(double left, double right) {
+  public void drive(double throttle, double turn) {
     if (m_drive != null) {
-      m_drive.tankDrive(0 - right, 0 - left);
+      m_drive.arcadeDrive(throttle, turn);
     }
   }
 

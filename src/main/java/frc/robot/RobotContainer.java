@@ -13,17 +13,18 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 //wpilibj.buttons
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.Compressor;
 import frc.robot.commands.TankDrive;
-import frc.robot.commands.ControlPanelRevolutions;
-import frc.robot.commands.RaiseControlPanel;
-import frc.robot.commands.LowerControlPanel;
-import frc.robot.commands.ManualPowerCell;
+import frc.robot.commands.DefaultControlPanel;
+import frc.robot.commands.Intake;
+
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.PowerCell;
+import frc.robot.util.JoystickAxis;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -37,36 +38,28 @@ public class RobotContainer {
   final DriveTrain m_drivetrain = new DriveTrain();
   final PowerCell m_powercell = new PowerCell();
   final ControlPanel m_controlPanel = new ControlPanel();
-  private Compressor m_compressor;
+  final Compressor m_compressor = new Compressor();
 
-  // Configure the button bindings
+
   final Joystick controller = new Joystick(0);
-  final DoubleSupplier leftsupply = () -> controller.getRawAxis(1);
-  final DoubleSupplier rightsupply = () -> controller.getRawAxis(5);
 
-  final DoubleSupplier intakeSuppier = () -> {
-    if (controller.getRawButton(3)) { // Hold triangle for elevator
-      return 0;
-    } else {
-      if (controller.getRawButton(1)) { // (Hold X to reverse)
-        return -(controller.getRawAxis(3) + 1) / 2;
-      } else {
-        return (controller.getRawAxis(3) + 1) / 2;
-      }
-    }
-  };
+  // joystick axes
+  final JoystickAxis throttleAxis = new JoystickAxis(controller, Constants.THROTTLE_AXIS, 1, 0, 0, 0);
+  final JoystickAxis turnAxis = new JoystickAxis(controller, Constants.TURN_AXIS, 1, 0, 0, 0);
 
-  final DoubleSupplier outputSupplier = () -> {
-    if (controller.getRawButton(3)) {
-      return 0;
-    } else {
-      if (controller.getRawButton(3)) { // (Hold Triangle to reverse)
-        return -(controller.getRawAxis(4) + 1) / 2;
-      } else {
-        return (controller.getRawAxis(4) + 1) / 2;
-      }
-    }
-  };
+  final JoystickAxis controlPanelAxis = new JoystickAxis(controller, Constants.CONTROL_PANEL_AXIS, 0.5, 0, 0, 0.1);
+
+  // axis suppliers
+  final DoubleSupplier throttleSupply = () -> throttleAxis.get();
+  final DoubleSupplier turnSupply = () -> turnAxis.get();
+
+  final DoubleSupplier controlPanelSupplier = () -> controlPanelAxis.get(); 
+
+  final Trigger intakeTrigger = new Trigger(() -> {
+    return controller.getRawAxis(Constants.INTAKE_AXIS) > 0.1;
+  });
+
+  // TODO shooter supplier
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -74,8 +67,8 @@ public class RobotContainer {
   public RobotContainer() {
     configureButtonBindings();
 
-    m_drivetrain.setDefaultCommand(new TankDrive(leftsupply, rightsupply, m_drivetrain));
-    m_powercell.setDefaultCommand(new ManualPowerCell(intakeSuppier, outputSupplier, m_powercell));
+    m_drivetrain.setDefaultCommand(new TankDrive(throttleSupply, turnSupply, m_drivetrain));
+    m_controlPanel.setDefaultCommand(new DefaultControlPanel(m_controlPanel, controlPanelSupplier));
     m_compressor.setClosedLoopControl(true);
   }
 
@@ -86,9 +79,9 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(controller, 3).whileHeld(new ControlPanelRevolutions(m_controlPanel));
-    new JoystickButton(controller, 4).whenPressed(new RaiseControlPanel(m_controlPanel));
-    new JoystickButton(controller, 2).whenPressed(new LowerControlPanel(m_controlPanel));
+
+    intakeTrigger.whileActiveOnce(new Intake(m_powercell));
+
     new JoystickButton(controller, 1).whileHeld(() -> {
       new PowerCell().run_belt(-0.5);
     });

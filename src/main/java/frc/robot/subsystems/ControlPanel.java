@@ -18,7 +18,6 @@ public class ControlPanel extends SubsystemBase {
   private Solenoid m_Solenoid3;
 
   private CANSparkMax spinnerMotor;
-  // Whatever sensor to detect color
 
   /**
    * Creates a new ControlPanel.
@@ -32,12 +31,6 @@ public class ControlPanel extends SubsystemBase {
     spinnerMotor.restoreFactoryDefaults();
   }
 
-  public void stop() {
-    if (spinnerMotor != null) {
-      spinnerMotor.set(0);
-    }
-  }
-
   public void extend() {
     m_Solenoid3.set(true);
   }
@@ -46,8 +39,8 @@ public class ControlPanel extends SubsystemBase {
     m_Solenoid3.set(false);
   }
 
-  public void spin() {
-    spinnerMotor.set(.5); // half power magic number
+  public void setSpeed(double speed) {
+    spinnerMotor.set(speed); // half power magic number
   }
 
   @Override
