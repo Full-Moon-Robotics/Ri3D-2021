@@ -26,6 +26,7 @@ public final class Constants {
     public static final int INTAKE_MOTOR_ID = 12;
     public static final int SPINNER_MOTOR_ID = 13;
     public static final int OUTPUT_MOTOR_ID = 14;
+    public static final int FLYWHEEL_MOTOR_ID = 14;
 
     // Axes
     public static final int THROTTLE_AXIS = 1;
@@ -42,4 +43,7 @@ public final class Constants {
     public static final double DRIVE_KV = 0; // TODO CHARACTERIZE
 
     public static final double DRIVE_TOP_SPEED = (12 - DRIVE_KS) / DRIVE_KV;    
+
+    // Shooter
+    public static final double FLYWHEEL_TOLERANCE = 100;
 }
