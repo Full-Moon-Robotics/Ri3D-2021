@@ -42,4 +42,7 @@ public final class Constants {
     public static final double DRIVE_KV = 0; // TODO CHARACTERIZE
 
     public static final double DRIVE_TOP_SPEED = (12 - DRIVE_KS) / DRIVE_KV;    
+    public static final double AUTO_MAX_VELOCITY = 3;
+    public static final double AUTO_MAX_ACCEL = 4;
+    public static final double AUTO_MAX_CENTRIPETAL_ACCEL = 2;
 }

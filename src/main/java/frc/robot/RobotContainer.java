@@ -8,6 +8,8 @@
 package frc.robot;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -16,9 +18,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.constraint.CentripetalAccelerationConstraint;
 //wpilibj.buttons
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -68,14 +73,33 @@ public class RobotContainer {
 
   // TODO shooter supplier
 
+  TrajectoryConfig m_trajConfig = new TrajectoryConfig(Constants.AUTO_MAX_VELOCITY, Constants.AUTO_MAX_ACCEL);
+
+  SendableChooser<List<Pose2d>> m_autoChooser = new SendableChooser<List<Pose2d>>();
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     configureButtonBindings();
 
+    // add trajectory constraints
+    m_trajConfig.setKinematics(m_drivetrain.getKinematics());
+    m_trajConfig.addConstraint(new CentripetalAccelerationConstraint(Constants.AUTO_MAX_CENTRIPETAL_ACCEL));
+
+
+    // set up autonomous trajectories
+    m_autoChooser.setDefaultOption("None", null);
+    m_autoChooser.addOption("Straight Line", Arrays.asList(new Pose2d(0, 0, new Rotation2d()), new Pose2d(3, 0, new Rotation2d())));
+    m_autoChooser.addOption("Curve",  Arrays.asList(new Pose2d(0, 0, new Rotation2d()), new Pose2d(3, 3, new Rotation2d())));
+
+    SmartDashboard.putData(m_autoChooser);
+   
+    // set default commands
     m_drivetrain.setDefaultCommand(new TankDrive(throttleSupply, turnSupply, m_drivetrain));
     m_controlPanel.setDefaultCommand(new DefaultControlPanel(m_controlPanel, controlPanelSupplier));
+
+    // enable compressor
     m_compressor.setClosedLoopControl(true);
   }
 
@@ -101,18 +125,19 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
 
-    TrajectoryConfig config = new TrajectoryConfig(Constants.DRIVE_TOP_SPEED, 3);
-    config.setKinematics(m_drivetrain.getKinematics());
-    // An ExampleCommand will run in autonomous
-    Trajectory traj = TrajectoryGenerator.generateTrajectory(
-        Arrays.asList(
-          new Pose2d(0, 0, new Rotation2d()),
-          new Pose2d(3, 3, new Rotation2d())
-        ), config);
+    List<Pose2d> waypoints = m_autoChooser.getSelected();
 
-    return new ResetDrivePose(m_drivetrain).andThen(new DrivePath(traj, m_drivetrain)).andThen(() -> {
-      m_drivetrain.stop();
-    });
+    if (waypoints != null) {
+
+      Trajectory traj = TrajectoryGenerator.generateTrajectory(waypoints, m_trajConfig);
+
+      return new ResetDrivePose(m_drivetrain).andThen(new DrivePath(traj, m_drivetrain)).andThen(() -> {
+        m_drivetrain.stop();
+      });
+
+    } else {
+      return null;
+    }
 
   }
 }
