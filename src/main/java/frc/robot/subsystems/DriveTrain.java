@@ -10,10 +10,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.EncoderType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import edu.wpi.first.wpilibj.drive.DifferentialDrive; import edu.wpi.first.wpilibj2.command.SubsystemBase; import frc.robot.Constants; 
 public class DriveTrain extends SubsystemBase {
   /**
    * Drive Train.
@@ -28,11 +25,11 @@ public class DriveTrain extends SubsystemBase {
   public DriveTrain() {
     super();
 
-    m_leftMotor = new CANSparkMax(5, MotorType.kBrushless);
-    m_leftMotor_1 = new CANSparkMax(6, MotorType.kBrushless);
+    m_leftMotor = new CANSparkMax(Constants.LEFT_MOTOR_ID, MotorType.kBrushless);
+    m_leftMotor_1 = new CANSparkMax(Constants.LEFT_MOTOR_1_ID, MotorType.kBrushless);
 
-    m_rightMotor = new CANSparkMax(8, MotorType.kBrushless);
-    m_rightMotor_1 = new CANSparkMax(9, MotorType.kBrushless);
+    m_rightMotor = new CANSparkMax(Constants.RIGHT_MOTOR_ID, MotorType.kBrushless);
+    m_rightMotor_1 = new CANSparkMax(Constants.RIGHT_MOTOR_1_ID, MotorType.kBrushless);
 
     m_drive = new DifferentialDrive(m_rightMotor, m_leftMotor);
 
