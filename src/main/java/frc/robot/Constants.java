@@ -46,4 +46,6 @@ public final class Constants {
 
     // Shooter
     public static final double FLYWHEEL_TOLERANCE = 100;
+    public static final double FLYWHEEL_KS = 0;
+    public static final double FLYWHEEL_KV = 0;
 }

@@ -22,7 +22,7 @@ public class Shooter extends SubsystemBase {
     private CANEncoder m_flywheelEncoder;
 
     private CANPIDController m_flywheelPID;
-    private SimpleMotorFeedforward m_flywheelFF = new SimpleMotorFeedforward(0, 0);
+    private SimpleMotorFeedforward m_flywheelFF = new SimpleMotorFeedforward(Constants.FLYWHEEL_KS, Constants.FLYWHEEL_KV);
 
     private boolean flywheelEnabled = false;
     private int targetRpm = 0;
