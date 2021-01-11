@@ -135,7 +135,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     intakeTrigger.whileActiveOnce(new Collect(m_intake));
-    shootTrigger.whileActiveOnce(new Shoot(m_shooter));
+    shootTrigger.whileActiveOnce(new Shoot(m_shooter, Constants.RPM));
 
     compressorTrigger.whenActive(() -> {
       m_compressor.setClosedLoopControl(!m_compressor.getClosedLoopControl());

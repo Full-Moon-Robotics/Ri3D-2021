@@ -54,6 +54,7 @@ public final class Constants {
     public static final double FLYWHEEL_TOLERANCE = 100;
     public static final double FLYWHEEL_KS = 0;
     public static final double FLYWHEEL_KV = 0;
+    public static final int RPM = 5600;
     
     // Intake
     public static final double INTAKE_SPEED = 0.8;

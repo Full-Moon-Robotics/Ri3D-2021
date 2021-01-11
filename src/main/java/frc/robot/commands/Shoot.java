@@ -6,10 +6,12 @@ import frc.robot.subsystems.Shooter;
 public class Shoot extends CommandBase {
 
     private Shooter m_shooter;
+    private int m_rpm;
 
-    public Shoot(Shooter shooter) {
+    public Shoot(Shooter shooter, int rpm) {
         super();
         m_shooter = shooter;
+        m_rpm = rpm;
         addRequirements(shooter);
     }
 
@@ -20,7 +22,7 @@ public class Shoot extends CommandBase {
 
     @Override
     public void execute() {
-        m_shooter.setTargetRpm(5600);
+        m_shooter.setTargetRpm(m_rpm);
     }
 
     @Override
