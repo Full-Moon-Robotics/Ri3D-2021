@@ -65,12 +65,16 @@ public class Drivetrain extends SubsystemBase {
     m_leftMotor.restoreFactoryDefaults();
     m_leftMotor_1.restoreFactoryDefaults();
 
-    m_leftMotor.
+    m_leftMotor.setSmartCurrentLimit(40);
+    m_leftMotor_1.setSmartCurrentLimit(40);
 
     m_leftMotor_1.follow(m_leftMotor);
 
     m_rightMotor.restoreFactoryDefaults();
     m_rightMotor_1.restoreFactoryDefaults();
+
+    m_rightMotor.setSmartCurrentLimit(40);
+    m_rightMotor_1.setSmartCurrentLimit(40);
 
     m_rightMotor.setInverted(true);
 
