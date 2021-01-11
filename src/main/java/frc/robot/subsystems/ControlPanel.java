@@ -12,11 +12,13 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class ControlPanel extends SubsystemBase {
 
-  private Solenoid controlSolenoid;
+  private DoubleSolenoid controlSolenoid;
 
   private CANSparkMax spinnerMotor;
 
@@ -26,18 +28,19 @@ public class ControlPanel extends SubsystemBase {
   public ControlPanel() {
     super();
 
-    controlSolenoid = new Solenoid(Constants.CONTROL_SOLENOID_ID);
-
+    controlSolenoid = new DoubleSolenoid(Constants.CONTROL_SOLENOID_ID_FWD, Constants.CONTROL_SOLENOID_ID_REV);
+    controlSolenoid.set(Value.kReverse);
+    
     spinnerMotor = new CANSparkMax(Constants.SPINNER_MOTOR_ID, MotorType.kBrushed);
     spinnerMotor.restoreFactoryDefaults();
   }
 
   public void extend() {
-    controlSolenoid.set(true);
+    controlSolenoid.set(Value.kForward);
   }
 
   public void retract() {
-    controlSolenoid.set(false);
+    controlSolenoid.set(Value.kReverse);
   }
 
   public void setSpeed(double speed) {

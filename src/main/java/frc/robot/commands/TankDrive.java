@@ -11,6 +11,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
@@ -44,9 +45,10 @@ public class TankDrive extends CommandBase {
    */
   @Override
   public void execute() {
-    m_drivetrain.driveClosedLoop(m_kinematics.toWheelSpeeds(
-      new ChassisSpeeds(m_throttle.getAsDouble(), 0, m_turn.getAsDouble())
-    ));
+
+    ChassisSpeeds speeds = new ChassisSpeeds(m_throttle.getAsDouble(), 0, m_turn.getAsDouble());
+
+    m_drivetrain.driveClosedLoop(m_kinematics.toWheelSpeeds(speeds));
   }
 
   /**

@@ -81,6 +81,10 @@ public class RobotContainer {
     return controller.getRawAxis(Constants.SHOOT_AXIS) > 0.1;
   });
 
+  final Trigger compressorTrigger = new Trigger(() -> {
+    return controller.getRawButton(4);
+  });
+
   TrajectoryConfig m_trajConfig = new TrajectoryConfig(Constants.AUTO_MAX_VELOCITY, Constants.AUTO_MAX_ACCEL);
 
   SendableChooser<List<Pose2d>> m_autoChooser = new SendableChooser<List<Pose2d>>();
@@ -121,6 +125,10 @@ public class RobotContainer {
 
     intakeTrigger.whileActiveOnce(new Collect(m_intake));
     shootTrigger.whileActiveOnce(new Shoot(m_shooter));
+
+    compressorTrigger.whenActive(() -> {
+      m_compressor.setClosedLoopControl(!m_compressor.getClosedLoopControl());
+    });
 
     new JoystickButton(controller, 1).whenPressed(new SetBeltSpeed(m_belt, -0.5)).whenReleased(new SetBeltSpeed(m_belt, 0));
   }

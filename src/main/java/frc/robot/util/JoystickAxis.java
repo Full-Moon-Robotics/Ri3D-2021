@@ -39,18 +39,18 @@ public class JoystickAxis {
         // compute deadband
         if(command > m_deadband) {
             command = (1 / (1 - m_deadband)) * command - (m_deadband / (1 - m_deadband));
-        } else if (command < m_deadband) {
+        } else if (command < -m_deadband) {
             command = (1 / (1 - m_deadband)) * command + (m_deadband / (1 - m_deadband));
         } else {
             command = 0;
         }
 
         // compute exponential gains
-        command = ((1 + 0.01 * m_expo * (command * command - 1.0)) * command);
+        double retval = ((1 + 0.01 * m_expo * (command * command - 1.0)) * command);
 
         // compute rates
-        command = (command * (m_rate + (Math.abs(command) * m_rate * m_superRate * 0.01)));
+        retval = (retval * (m_rate + (Math.abs(retval) * m_rate * m_superRate * 0.01)));
 
-        return command;
+        return retval;
     }
 }
