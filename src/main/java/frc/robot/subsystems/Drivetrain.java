@@ -27,10 +27,10 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 
 import frc.robot.Constants;
 
+/**
+ * Provides an interface for the drivetrain, which moves the robot.
+ */
 public class Drivetrain extends SubsystemBase {
-  /**
-   * Drive Train.
-   */
 
   private AnalogGyro m_gyro = new AnalogGyro(0);
 
@@ -54,6 +54,9 @@ public class Drivetrain extends SubsystemBase {
 
   private DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(getGyroRotation());
   
+  /**
+   * Creates a new Drivetrain, configuring all involved motors and encoders.
+   */
   public Drivetrain() {
     super();
 
@@ -116,7 +119,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   /**
-   * Stops all movement
+   * Stops all movement.
    */
   public void stop() {
     m_leftMotor.stopMotor();
@@ -124,21 +127,21 @@ public class Drivetrain extends SubsystemBase {
   }
 
   /**
-   * Gets the current pose of the drivetrain
+   * Gets the current posisition of the drivetrain.
    */
   public Pose2d getPose() {
     return m_odometry.getPoseMeters();
   }
 
   /**
-   * Gets the drivetrain's kinematic model
+   * Gets the drivetrain's kinematic model.
    */
   public DifferentialDriveKinematics getKinematics() {
     return m_kinematics;
   }
 
   /**
-   * Resets the drivetrain's stored pose and encoder values
+   * Resets the drivetrain's stored pose and encoder values.
    */
   public void resetPose() {
     m_leftEncoder.setPosition(0);
@@ -151,9 +154,12 @@ public class Drivetrain extends SubsystemBase {
     return m_gyro.getRotation2d();//Rotation2d.fromDegrees(-m_gyroFilter.calculate(m_gyro.getAngle()));
   }
 
+  /**
+   * Updates position and odometry information every period.
+   */
   @Override
   public void periodic() {
-    // update the drivetrain's pose estimate
+    // update the drivetrain's position estimate
     m_odometry.update(getGyroRotation(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
 
     SmartDashboard.putNumber("left_enc", m_leftEncoder.getPosition());
