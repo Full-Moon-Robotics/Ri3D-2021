@@ -95,8 +95,8 @@ public class Drivetrain extends SubsystemBase {
     double left = speeds.leftMetersPerSecond;
     double right = speeds.rightMetersPerSecond;
 
-    double leftVoltage = m_leftFF.calculate(left);// + m_leftController.calculate(m_leftEncoder.getVelocity(), left);
-    double rightVoltage = m_rightFF.calculate(right);// + m_rightController.calculate(m_rightEncoder.getVelocity(), right);
+    double leftVoltage = m_leftFF.calculate(left) + m_leftController.calculate(m_leftEncoder.getVelocity(), left);
+    double rightVoltage = m_rightFF.calculate(right) + m_rightController.calculate(m_rightEncoder.getVelocity(), right);
 
     m_leftMotor.setVoltage(leftVoltage);
     m_rightMotor.setVoltage(rightVoltage);
