@@ -46,9 +46,9 @@ public final class Constants {
 
     public static final double DRIVE_TOP_SPEED = 3.6;
 
-    public static final double AUTO_MAX_VELOCITY = 1.5;
-    public static final double AUTO_MAX_ACCEL = 0.75;
-    public static final double AUTO_MAX_CENTRIPETAL_ACCEL = 2;
+    public static final double AUTO_MAX_VELOCITY = 1;
+    public static final double AUTO_MAX_ACCEL = 0.5;
+    public static final double AUTO_MAX_CENTRIPETAL_ACCEL = 1;
 
     // Shooter
     public static final double FLYWHEEL_TOLERANCE = 100;
