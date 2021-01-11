@@ -9,7 +9,6 @@ package frc.robot;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -39,7 +38,6 @@ import frc.robot.subsystems.Belt;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.PowerCell;
 import frc.robot.subsystems.Shooter;
 import frc.robot.util.JoystickAxis;
 
