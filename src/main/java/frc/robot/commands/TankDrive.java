@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.wpilibj.SlewRateLimiter;
 import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,6 +24,9 @@ public class TankDrive extends CommandBase {
   private final DoubleSupplier m_throttle;
   private final DoubleSupplier m_turn;
   private final DifferentialDriveKinematics m_kinematics;
+
+  private SlewRateLimiter thrLimit = new SlewRateLimiter(5);
+  private SlewRateLimiter turnLimit = new SlewRateLimiter(15);
 
   /**
    * Creates a new TankDrive command.
@@ -43,7 +47,7 @@ public class TankDrive extends CommandBase {
   @Override
   public void execute() {
 
-    ChassisSpeeds speeds = new ChassisSpeeds(m_throttle.getAsDouble(), 0, m_turn.getAsDouble());
+    ChassisSpeeds speeds = new ChassisSpeeds(thrLimit.calculate(m_throttle.getAsDouble()), 0, turnLimit.calculate(m_turn.getAsDouble()));
 
     m_drivetrain.driveClosedLoop(m_kinematics.toWheelSpeeds(speeds));
   }
