@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
@@ -43,8 +44,8 @@ public class Drivetrain extends SubsystemBase {
   private CANEncoder m_leftEncoder;
   private CANEncoder m_rightEncoder;
 
-  private PIDController m_leftController = new PIDController(1.5, 0, 0);
-  private PIDController m_rightController = new PIDController(1.5, 0, 0);
+  private PIDController m_leftController = new PIDController(0.4, 0, 0);
+  private PIDController m_rightController = new PIDController(0.4, 0, 0);
 
   private SimpleMotorFeedforward m_leftFF = new SimpleMotorFeedforward(0.1765, 3.3, 0.341);
   private SimpleMotorFeedforward m_rightFF = new SimpleMotorFeedforward(0.1835, 3.24, 0.3645);
@@ -68,6 +69,9 @@ public class Drivetrain extends SubsystemBase {
     m_leftMotor.setSmartCurrentLimit(40);
     m_leftMotor_1.setSmartCurrentLimit(40);
 
+    m_leftMotor.setIdleMode(IdleMode.kBrake);
+    m_leftMotor_1.setIdleMode(IdleMode.kBrake);
+
     m_leftMotor_1.follow(m_leftMotor);
 
     m_rightMotor.restoreFactoryDefaults();
@@ -75,6 +79,9 @@ public class Drivetrain extends SubsystemBase {
 
     m_rightMotor.setSmartCurrentLimit(40);
     m_rightMotor_1.setSmartCurrentLimit(40);
+
+    m_rightMotor.setIdleMode(IdleMode.kBrake);
+    m_rightMotor_1.setIdleMode(IdleMode.kBrake);
 
     m_rightMotor.setInverted(true);
 
@@ -84,7 +91,7 @@ public class Drivetrain extends SubsystemBase {
     m_rightEncoder = m_rightMotor.getEncoder();
 
     // set up encoder conversion factor
-    double conversionFactor = Constants.DRIVE_GEAR_RATIO * 0.314159;
+    double conversionFactor = Constants.DRIVE_GEAR_RATIO * 0.3239;
 
     m_leftEncoder.setVelocityConversionFactor(conversionFactor/60);
     m_leftEncoder.setPositionConversionFactor(conversionFactor);
