@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
@@ -68,6 +69,9 @@ public class Drivetrain extends SubsystemBase {
     m_leftMotor.setSmartCurrentLimit(40);
     m_leftMotor_1.setSmartCurrentLimit(40);
 
+    m_leftMotor.setIdleMode(IdleMode.kBrake);
+    m_leftMotor_1.setIdleMode(IdleMode.kBrake);
+
     m_leftMotor_1.follow(m_leftMotor);
 
     m_rightMotor.restoreFactoryDefaults();
@@ -75,6 +79,9 @@ public class Drivetrain extends SubsystemBase {
 
     m_rightMotor.setSmartCurrentLimit(40);
     m_rightMotor_1.setSmartCurrentLimit(40);
+
+    m_rightMotor.setIdleMode(IdleMode.kBrake);
+    m_rightMotor_1.setIdleMode(IdleMode.kBrake);
 
     m_rightMotor.setInverted(true);
 
