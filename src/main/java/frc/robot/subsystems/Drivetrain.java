@@ -65,6 +65,8 @@ public class Drivetrain extends SubsystemBase {
     m_leftMotor.restoreFactoryDefaults();
     m_leftMotor_1.restoreFactoryDefaults();
 
+    m_leftMotor.
+
     m_leftMotor_1.follow(m_leftMotor);
 
     m_rightMotor.restoreFactoryDefaults();

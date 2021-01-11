@@ -17,7 +17,8 @@ package frc.robot;
  */
 public final class Constants {
     // IDs
-    public static final int CONTROL_SOLENOID_ID = 3;
+    public static final int CONTROL_SOLENOID_ID_FWD = 2;
+    public static final int CONTROL_SOLENOID_ID_REV = 3;
     public static final int LEFT_MOTOR_ID = 5;
     public static final int LEFT_MOTOR_1_ID = 6;
     public static final int RIGHT_MOTOR_ID = 8;
