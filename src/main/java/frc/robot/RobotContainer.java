@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.CentripetalAccelerationConstraint;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveKinematicsConstraint;
 //wpilibj.buttons
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -96,7 +97,7 @@ public class RobotContainer {
     configureButtonBindings();
 
     // add trajectory constraints
-    m_trajConfig.setKinematics(m_drivetrain.getKinematics());
+    m_trajConfig.addConstraint(new DifferentialDriveKinematicsConstraint(m_drivetrain.getKinematics(), 3.6));
     m_trajConfig.addConstraint(new CentripetalAccelerationConstraint(Constants.AUTO_MAX_CENTRIPETAL_ACCEL));
 
     // set up autonomous trajectories
