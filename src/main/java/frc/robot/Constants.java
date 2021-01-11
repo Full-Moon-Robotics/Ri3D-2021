@@ -39,7 +39,7 @@ public final class Constants {
     // Drivetrain
     public static final double DRIVE_GEAR_RATIO = 0.120689;
     public static final double DRIVE_WHEEL_DIAMETER = 3.961;
-    public static final double DRIVE_TRACK_WIDTH = 0.6096;
+    public static final double DRIVE_TRACK_WIDTH = 0.7;
 
     public static final double DRIVE_KS = 0.18;
     public static final double DRIVE_KV = 3.28;
