@@ -107,6 +107,17 @@ public class RobotContainer {
       new Pose2d(0, 0, new Rotation2d()), 
       new Pose2d(2, 2, new Rotation2d()),
       new Pose2d(3, 2, new Rotation2d())));
+      m_autoChooser.addOption("Bumps",  Arrays.asList(
+        new Pose2d(0, 0, new Rotation2d()), 
+        new Pose2d(1.6, 0.94, Rotation2d.fromDegrees(45)),
+        new Pose2d(3.152, 1.736, new Rotation2d()),
+        new Pose2d(4.484, 1.736, new Rotation2d()),
+        new Pose2d(5.152, 0.942, Rotation2d.fromDegrees(-90)),
+        new Pose2d(4.382, 0, Rotation2d.fromDegrees(-180)),
+        new Pose2d(3.628, 0.942, Rotation2d.fromDegrees(-270)),
+        new Pose2d(2.521, 1.736, Rotation2d.fromDegrees(-180)),
+        new Pose2d(0.526, 1.736, Rotation2d.fromDegrees(-180))
+      )));
 
     SmartDashboard.putData(m_autoChooser);
    

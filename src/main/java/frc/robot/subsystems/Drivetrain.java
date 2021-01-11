@@ -84,7 +84,7 @@ public class Drivetrain extends SubsystemBase {
     m_rightEncoder = m_rightMotor.getEncoder();
 
     // set up encoder conversion factor
-    double conversionFactor = Constants.DRIVE_GEAR_RATIO * 0.314159;
+    double conversionFactor = Constants.DRIVE_GEAR_RATIO * 0.31918581360474;
 
     m_leftEncoder.setVelocityConversionFactor(conversionFactor/60);
     m_leftEncoder.setPositionConversionFactor(conversionFactor);
