@@ -25,7 +25,7 @@ public class Shooter extends SubsystemBase {
     private SimpleMotorFeedforward m_flywheelFF = new SimpleMotorFeedforward(Constants.FLYWHEEL_KS, Constants.FLYWHEEL_KV);
 
     private boolean flywheelEnabled = false;
-    private int targetRpm = 0;
+    private double targetRpm = 0;
 
     public Shooter() {
         super();
@@ -34,6 +34,7 @@ public class Shooter extends SubsystemBase {
         m_flywheelMotor.setIdleMode(IdleMode.kCoast);
         
         m_flywheelEncoder = m_flywheelMotor.getEncoder();
+        // m_flywheelEncoder.setVelocityConversionFactor(11/8);
 
         m_flywheelPID = m_flywheelMotor.getPIDController();
         m_flywheelPID.setP(0.0002);
@@ -48,11 +49,11 @@ public class Shooter extends SubsystemBase {
         this.flywheelEnabled = flywheelEnabled;
     }
 
-    public int getTargetRpm() {
+    public double getTargetRpm() {
         return targetRpm;
     }
 
-    public void setTargetRpm(int targetRpm) {
+    public void setTargetRpm(double targetRpm) {
         this.targetRpm = targetRpm;
     }
 
