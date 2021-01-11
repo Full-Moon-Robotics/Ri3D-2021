@@ -53,7 +53,7 @@ public class TankDrive extends CommandBase {
   /**
    * As a default command, always returns false.
    * 
-   * @see  edu.wpi.first.wpilibj2.command.Subsystem#setDefaultCommand
+   * @see edu.wpi.first.wpilibj2.command.Subsystem#setDefaultCommand
    */
   @Override
   public boolean isFinished() {
@@ -62,7 +62,6 @@ public class TankDrive extends CommandBase {
 
   /**
    * Ends any robot movement by stopping the drivetrain.
-   * 
    */
   @Override
   public void end(boolean interrupted) {

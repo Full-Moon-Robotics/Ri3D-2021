@@ -45,7 +45,6 @@ public class DefaultControlPanel extends CommandBase {
     this.m_controlPanel.extend();
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   /**
    * Spins the Control Panel engaging wheel.
    * Uses the left control stick to determine direction and speed.
@@ -75,7 +74,7 @@ public class DefaultControlPanel extends CommandBase {
   /**
    * As a default command, always returns false.
    * 
-   * @see  edu.wpi.first.wpilibj2.command.Subsystem#setDefaultCommand
+   * @see edu.wpi.first.wpilibj2.command.Subsystem#setDefaultCommand
    */
   @Override
   public boolean isFinished() {
