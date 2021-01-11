@@ -15,7 +15,7 @@ public class Collect extends CommandBase {
 
     @Override
     public void initialize() {
-       m_intake.run_intake(0.5);
+       m_intake.run_intake(0.8);
     }
 
     @Override
