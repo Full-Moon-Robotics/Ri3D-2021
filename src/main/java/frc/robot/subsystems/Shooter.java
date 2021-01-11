@@ -12,10 +12,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+/**
+ * Provides an interface for the flywheel, which launches Power Cells for scoring.
+ */
 public class Shooter extends SubsystemBase {
-    /**
-     * Outtake.
-     */
 
     private CANSparkMax m_flywheelMotor = new CANSparkMax(Constants.FLYWHEEL_MOTOR_ID, MotorType.kBrushless);
     
@@ -27,6 +27,11 @@ public class Shooter extends SubsystemBase {
     private boolean flywheelEnabled = false;
     private double targetRpm = 0;
 
+    /**
+     * Creates a new Shooter, preparing the flywheel motor and PID
+     * 
+     * @see Shooter
+     */
     public Shooter() {
         super();
 
@@ -57,10 +62,19 @@ public class Shooter extends SubsystemBase {
         this.targetRpm = targetRpm;
     }
 
+    /**
+     * Checks if the current flywheel speed is within an acceptance range to shoot consistently.
+     *
+     * @return if the flywheel is at the right RPM to shoot
+     */
     public boolean isReadyToShoot() {
         return flywheelEnabled && Math.abs(m_flywheelEncoder.getVelocity() - targetRpm) < Constants.FLYWHEEL_TOLERANCE;
     }
 
+    /**
+     * Every period, updates the flywheel feed forward values for the encoder and updates statistics.
+     * Stops the motor if the flywheel is disabled.
+     */
     @Override
     public void periodic() {
         if(flywheelEnabled) {
