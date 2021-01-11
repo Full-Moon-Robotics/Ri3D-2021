@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
@@ -36,7 +37,12 @@ public class Shoot extends CommandBase {
      */
     @Override
     public void execute() {
-        m_shooter.setTargetRpm(5600);
+        m_shooter.setTargetRpm(SmartDashboard.getNumber("shooter_target_rpm", 0));
+        if(m_shooter.isReadyToShoot()) {
+            // index
+        } else {
+            // stop indexing
+        }
     }
 
     /**
