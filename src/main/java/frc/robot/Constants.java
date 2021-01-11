@@ -36,7 +36,7 @@ public final class Constants {
     public static final int SHOOT_AXIS = 4;
 
     // Drivetrain
-    public static final double DRIVE_GEAR_RATIO = 7/58;
+    public static final double DRIVE_GEAR_RATIO = 0.120689;
     public static final double DRIVE_WHEEL_DIAMETER = 3.961;
     public static final double DRIVE_TRACK_WIDTH = 0.816864;
 

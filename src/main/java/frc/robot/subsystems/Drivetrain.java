@@ -78,7 +78,7 @@ public class Drivetrain extends SubsystemBase {
     m_rightEncoder = m_rightMotor.getEncoder();
 
     // set up encoder conversion factor
-    double conversionFactor = Constants.DRIVE_GEAR_RATIO * Math.PI * Units.inchesToMeters(Constants.DRIVE_WHEEL_DIAMETER);
+    double conversionFactor = Constants.DRIVE_GEAR_RATIO * 0.314159;
 
     m_leftEncoder.setVelocityConversionFactor(conversionFactor/60);
     m_leftEncoder.setPositionConversionFactor(conversionFactor);
@@ -141,6 +141,9 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     // update the drivetrain's pose estimate
     m_odometry.update(getGyroRotation(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
+
+    SmartDashboard.putNumber("left_enc", m_leftEncoder.getPosition());
+    SmartDashboard.putNumber("right_enc", m_rightEncoder.getPosition());
     
     // publish debug odometry values
     SmartDashboard.putNumber("odometry_x", m_odometry.getPoseMeters().getX());
