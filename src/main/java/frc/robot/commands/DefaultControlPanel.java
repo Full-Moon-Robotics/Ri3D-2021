@@ -26,8 +26,8 @@ public class DefaultControlPanel extends CommandBase {
   /**
    * Creates a new DefaultControlPanel.
    * 
-   * @param controlPanel an instance of the control panel subsystem
-   * @param axis the position of the color wheel control stick
+   * @param controlPanel an instance of the control panel subsystem.
+   * @param axis the position of the color wheel control stick.
    * @see DefaultControlPanel
    */
   public DefaultControlPanel(ControlPanel controlPanel, DoubleSupplier axis) {
