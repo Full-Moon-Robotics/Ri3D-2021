@@ -103,7 +103,10 @@ public class RobotContainer {
     // set up autonomous trajectories
     m_autoChooser.setDefaultOption("None", null);
     m_autoChooser.addOption("Straight Line", Arrays.asList(new Pose2d(0, 0, new Rotation2d()), new Pose2d(3, 0, new Rotation2d())));
-    m_autoChooser.addOption("Curve",  Arrays.asList(new Pose2d(0, 0, new Rotation2d()), new Pose2d(2, 2, new Rotation2d())));
+    m_autoChooser.addOption("Curve",  Arrays.asList(
+      new Pose2d(0, 0, new Rotation2d()), 
+      new Pose2d(2, 2, new Rotation2d()),
+      new Pose2d(3, 2, new Rotation2d())));
 
     SmartDashboard.putData(m_autoChooser);
    
