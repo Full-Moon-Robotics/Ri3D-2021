@@ -16,6 +16,9 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
+/**
+ * Provides an interface for the Control Panel manipulation system.
+ */
 public class ControlPanel extends SubsystemBase {
 
   private DoubleSolenoid controlSolenoid;
@@ -23,7 +26,9 @@ public class ControlPanel extends SubsystemBase {
   private CANSparkMax spinnerMotor;
 
   /**
-   * Creates a new ControlPanel.
+   * Creates a new ControlPanel, preparing its solenoid and motor.
+   * 
+   * @see ControlPanel
    */
   public ControlPanel() {
     super();
@@ -35,14 +40,25 @@ public class ControlPanel extends SubsystemBase {
     spinnerMotor.restoreFactoryDefaults();
   }
 
+  /**
+   * Pushes the system upwards.
+   */
   public void extend() {
     controlSolenoid.set(Value.kForward);
   }
 
+  /**
+   * Brings the system back near the frame.
+   */
   public void retract() {
     controlSolenoid.set(Value.kReverse);
   }
-
+  /**
+   * Sets a new angular velocity to run the motor at.
+   * Ranges from -1.0 to 1.0, with 0 being no rotation.
+   *
+   * @param speed the intended direction (sign) and percent of maximum motor speed (0 to 1) 
+   */
   public void setSpeed(double speed) {
     spinnerMotor.set(speed); // half power magic number
   }

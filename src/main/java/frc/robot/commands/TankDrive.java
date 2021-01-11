@@ -12,7 +12,6 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj.SlewRateLimiter;
 import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
@@ -31,9 +30,10 @@ public class TankDrive extends CommandBase {
   /**
    * Creates a new TankDrive command.
    *
-   * @param left       The control input for the left side of the drive
-   * @param right      The control input for the right sight of the drive
+   * @param throttle   The position of the throttle stick
+   * @param turn       The position of the turning stick
    * @param drivetrain The drivetrain subsystem to drive
+   * @see TankDrive
    */
   public TankDrive(DoubleSupplier throttle, DoubleSupplier turn, Drivetrain drivetrain) {
     m_drivetrain = drivetrain;
@@ -43,7 +43,9 @@ public class TankDrive extends CommandBase {
     addRequirements(m_drivetrain);
   }
 
-  // Called repeatedly when this Command is scheduled to run
+  /**
+   * Called repeatedly to update the drivetrain using a vector of current controller inputs.
+   */
   @Override
   public void execute() {
 
@@ -52,13 +54,19 @@ public class TankDrive extends CommandBase {
     m_drivetrain.driveClosedLoop(m_kinematics.toWheelSpeeds(speeds));
   }
 
-  // Make this return true when this Command no longer needs to run execute()
+  /**
+   * As a default command, always returns false.
+   * 
+   * @see edu.wpi.first.wpilibj2.command.Subsystem#setDefaultCommand
+   */
   @Override
   public boolean isFinished() {
-    return false; // Runs until interrupted
+    return false;
   }
 
-  // Called once after isFinished returns true
+  /**
+   * Ends any robot movement by stopping the drivetrain.
+   */
   @Override
   public void end(boolean interrupted) {
     m_drivetrain.stop();
