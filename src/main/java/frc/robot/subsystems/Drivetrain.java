@@ -141,7 +141,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   private Rotation2d getGyroRotation() {
-    return Rotation2d.fromDegrees(-m_gyroFilter.calculate(m_gyro.getAngle()));
+    return m_gyro.getRotation2d();//Rotation2d.fromDegrees(-m_gyroFilter.calculate(m_gyro.getAngle()));
   }
 
   @Override
