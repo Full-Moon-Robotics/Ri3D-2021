@@ -16,6 +16,8 @@ public class Intake extends SubsystemBase{
         intakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR_ID, MotorType.kBrushed);
         intakeMotor.restoreFactoryDefaults();
 
+        intakeMotor.setInverted(true);
+
     }
 
     public void run_intake(double speed) {
