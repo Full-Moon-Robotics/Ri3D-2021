@@ -24,14 +24,17 @@ public class Shoot extends CommandBase {
         m_shooter.setTargetRpm(SmartDashboard.getNumber("shooter_target_rpm", 0));
         if(m_shooter.isReadyToShoot()) {
             // index
+            m_shooter.setIndexer(0.5);
         } else {
             // stop indexing
+            m_shooter.setIndexer(0);
         }
     }
 
     @Override
     public void end(boolean interrupted) {
         m_shooter.setFlywheelEnabled(false);
+        m_shooter.setIndexer(-0.2);
     }
     
     @Override
