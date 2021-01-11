@@ -38,12 +38,12 @@ public final class Constants {
     // Drivetrain
     public static final double DRIVE_GEAR_RATIO = 7/58;
     public static final double DRIVE_WHEEL_DIAMETER = 3.961;
-    public static final double DRIVE_TRACK_WIDTH = 1.0; // TODO CHARACTERIZE
+    public static final double DRIVE_TRACK_WIDTH = 0.816864;
 
-    public static final double DRIVE_KS = 0; // TODO CHARACTERIZE
-    public static final double DRIVE_KV = 0; // TODO CHARACTERIZE
+    public static final double DRIVE_KS = 0.18;
+    public static final double DRIVE_KV = 3.28;
 
-    public static final double DRIVE_TOP_SPEED = (12 - DRIVE_KS) / DRIVE_KV;    
+    public static final double DRIVE_TOP_SPEED = 3.6;
 
     public static final double AUTO_MAX_VELOCITY = 3;
     public static final double AUTO_MAX_ACCEL = 4;

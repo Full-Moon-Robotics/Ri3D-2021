@@ -43,11 +43,11 @@ public class Drivetrain extends SubsystemBase {
   private CANEncoder m_leftEncoder;
   private CANEncoder m_rightEncoder;
 
-  private PIDController m_leftController = new PIDController(0.5, 0, 0);
-  private PIDController m_rightController = new PIDController(0.5, 0, 0);
+  private PIDController m_leftController = new PIDController(0.3, 0, 0);
+  private PIDController m_rightController = new PIDController(0.3, 0, 0);
 
-  private SimpleMotorFeedforward m_leftFF = new SimpleMotorFeedforward(0, 0);
-  private SimpleMotorFeedforward m_rightFF = new SimpleMotorFeedforward(0, 0);
+  private SimpleMotorFeedforward m_leftFF = new SimpleMotorFeedforward(0.1765, 3.3, 0.341);
+  private SimpleMotorFeedforward m_rightFF = new SimpleMotorFeedforward(0.1835, 3.24, 0.3645);
 
   private DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(Constants.DRIVE_TRACK_WIDTH);
 
@@ -65,11 +65,12 @@ public class Drivetrain extends SubsystemBase {
     m_leftMotor.restoreFactoryDefaults();
     m_leftMotor_1.restoreFactoryDefaults();
 
-    m_leftMotor.setInverted(true);
     m_leftMotor_1.follow(m_leftMotor);
 
     m_rightMotor.restoreFactoryDefaults();
     m_rightMotor_1.restoreFactoryDefaults();
+
+    m_rightMotor.setInverted(true);
 
     m_rightMotor_1.follow(m_rightMotor);
 
