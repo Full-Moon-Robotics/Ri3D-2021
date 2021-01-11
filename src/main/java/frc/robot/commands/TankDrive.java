@@ -11,7 +11,6 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
@@ -61,7 +60,6 @@ public class TankDrive extends CommandBase {
     return false;
   }
 
-  // Called once after isFinished returns true
   /**
    * Ends any robot movement by stopping the drivetrain.
    * 
