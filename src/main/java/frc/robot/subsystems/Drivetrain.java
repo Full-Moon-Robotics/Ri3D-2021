@@ -43,11 +43,11 @@ public class Drivetrain extends SubsystemBase {
   private CANEncoder m_leftEncoder;
   private CANEncoder m_rightEncoder;
 
-  private PIDController m_leftController = new PIDController(0.5, 0, 0);
-  private PIDController m_rightController = new PIDController(0.5, 0, 0);
+  private PIDController m_leftController = new PIDController(0.3, 0, 0);
+  private PIDController m_rightController = new PIDController(0.3, 0, 0);
 
-  private SimpleMotorFeedforward m_leftFF = new SimpleMotorFeedforward(0, 0);
-  private SimpleMotorFeedforward m_rightFF = new SimpleMotorFeedforward(0, 0);
+  private SimpleMotorFeedforward m_leftFF = new SimpleMotorFeedforward(0.1765, 3.3, 0.341);
+  private SimpleMotorFeedforward m_rightFF = new SimpleMotorFeedforward(0.1835, 3.24, 0.3645);
 
   private DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(Constants.DRIVE_TRACK_WIDTH);
 
@@ -65,11 +65,18 @@ public class Drivetrain extends SubsystemBase {
     m_leftMotor.restoreFactoryDefaults();
     m_leftMotor_1.restoreFactoryDefaults();
 
-    m_leftMotor.setInverted(true);
+    m_leftMotor.setSmartCurrentLimit(40);
+    m_leftMotor_1.setSmartCurrentLimit(40);
+
     m_leftMotor_1.follow(m_leftMotor);
 
     m_rightMotor.restoreFactoryDefaults();
     m_rightMotor_1.restoreFactoryDefaults();
+
+    m_rightMotor.setSmartCurrentLimit(40);
+    m_rightMotor_1.setSmartCurrentLimit(40);
+
+    m_rightMotor.setInverted(true);
 
     m_rightMotor_1.follow(m_rightMotor);
 
@@ -77,7 +84,7 @@ public class Drivetrain extends SubsystemBase {
     m_rightEncoder = m_rightMotor.getEncoder();
 
     // set up encoder conversion factor
-    double conversionFactor = Constants.DRIVE_GEAR_RATIO * Math.PI * Units.inchesToMeters(Constants.DRIVE_WHEEL_DIAMETER);
+    double conversionFactor = Constants.DRIVE_GEAR_RATIO * 0.314159;
 
     m_leftEncoder.setVelocityConversionFactor(conversionFactor/60);
     m_leftEncoder.setPositionConversionFactor(conversionFactor);
@@ -90,6 +97,7 @@ public class Drivetrain extends SubsystemBase {
    * Drives the robot using commanded chassis speeds. Call repeatedly.
    */
   public void driveClosedLoop(DifferentialDriveWheelSpeeds speeds) {
+
     double left = speeds.leftMetersPerSecond;
     double right = speeds.rightMetersPerSecond;
 
@@ -140,6 +148,9 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     // update the drivetrain's pose estimate
     m_odometry.update(getGyroRotation(), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
+
+    SmartDashboard.putNumber("left_enc", m_leftEncoder.getPosition());
+    SmartDashboard.putNumber("right_enc", m_rightEncoder.getPosition());
     
     // publish debug odometry values
     SmartDashboard.putNumber("odometry_x", m_odometry.getPoseMeters().getX());
