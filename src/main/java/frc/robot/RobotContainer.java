@@ -117,7 +117,7 @@ public class RobotContainer {
         new Pose2d(3.628, 0.942, Rotation2d.fromDegrees(-270)),
         new Pose2d(2.521, 1.736, Rotation2d.fromDegrees(-180)),
         new Pose2d(0.526, 1.736, Rotation2d.fromDegrees(-180))
-      )));
+      ));
 
     SmartDashboard.putData(m_autoChooser);
    
