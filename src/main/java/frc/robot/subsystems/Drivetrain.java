@@ -43,8 +43,8 @@ public class Drivetrain extends SubsystemBase {
   private CANEncoder m_leftEncoder;
   private CANEncoder m_rightEncoder;
 
-  private PIDController m_leftController = new PIDController(0.7, 0, 0);
-  private PIDController m_rightController = new PIDController(0.7, 0, 0);
+  private PIDController m_leftController = new PIDController(1.5, 0, 0);
+  private PIDController m_rightController = new PIDController(1.5, 0, 0);
 
   private SimpleMotorFeedforward m_leftFF = new SimpleMotorFeedforward(0.1765, 3.3, 0.341);
   private SimpleMotorFeedforward m_rightFF = new SimpleMotorFeedforward(0.1835, 3.24, 0.3645);
