@@ -32,10 +32,8 @@ import frc.robot.commands.DefaultControlPanel;
 import frc.robot.commands.DrivePath;
 import frc.robot.commands.Collect;
 import frc.robot.commands.ResetDrivePose;
-import frc.robot.commands.SetBeltSpeed;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.TankDrive;
-import frc.robot.subsystems.Belt;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
@@ -53,7 +51,6 @@ public class RobotContainer {
 
   final Drivetrain m_drivetrain = new Drivetrain();
   final Intake m_intake = new Intake();
-  final Belt m_belt = new Belt();
   final ControlPanel m_controlPanel = new ControlPanel();
   final Shooter m_shooter = new Shooter();
 
@@ -140,9 +137,7 @@ public class RobotContainer {
     compressorTrigger.whenActive(() -> {
       m_compressor.setClosedLoopControl(!m_compressor.getClosedLoopControl());
     });
-
-    new JoystickButton(controller, 1).whenPressed(new SetBeltSpeed(m_belt, -0.5))
-        .whenReleased(new SetBeltSpeed(m_belt, 0));
+    
   }
 
   /**
