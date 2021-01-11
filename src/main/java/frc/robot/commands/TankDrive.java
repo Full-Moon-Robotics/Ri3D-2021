@@ -43,11 +43,7 @@ public class TankDrive extends CommandBase {
   @Override
   public void execute() {
 
-    System.out.println(m_throttle.getAsDouble() + " | "+m_turn.getAsDouble());
-
     ChassisSpeeds speeds = new ChassisSpeeds(m_throttle.getAsDouble(), 0, m_turn.getAsDouble());
-    SmartDashboard.putNumber("throttle", speeds.vxMetersPerSecond);
-    SmartDashboard.putNumber("turn", speeds.omegaRadiansPerSecond);
 
     m_drivetrain.driveClosedLoop(m_kinematics.toWheelSpeeds(speeds));
   }
