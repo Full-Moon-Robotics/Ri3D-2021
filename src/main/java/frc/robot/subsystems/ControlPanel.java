@@ -27,6 +27,8 @@ public class ControlPanel extends SubsystemBase {
 
   /**
    * Creates a new ControlPanel, preparing its solenoid and motor.
+   * 
+   * @see ControlPanel
    */
   public ControlPanel() {
     super();
@@ -54,6 +56,7 @@ public class ControlPanel extends SubsystemBase {
   /**
    * Sets a new angular velocity to run the motor at.
    * Ranges from -1.0 to 1.0, with 0 being no rotation.
+   *
    * @param speed the intended direction (sign) and percent of maximum motor speed (0 to 1) 
    */
   public void setSpeed(double speed) {

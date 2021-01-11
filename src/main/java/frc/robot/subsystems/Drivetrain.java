@@ -56,6 +56,8 @@ public class Drivetrain extends SubsystemBase {
   
   /**
    * Creates a new Drivetrain, configuring all involved motors and encoders.
+   * 
+   * @see Drivetrain
    */
   public Drivetrain() {
     super();
