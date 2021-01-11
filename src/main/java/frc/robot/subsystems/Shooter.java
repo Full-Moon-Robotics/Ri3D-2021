@@ -18,6 +18,7 @@ public class Shooter extends SubsystemBase {
      */
 
     private CANSparkMax m_flywheelMotor = new CANSparkMax(Constants.FLYWHEEL_MOTOR_ID, MotorType.kBrushless);
+    private CANSparkMax m_indexMotor = new CANSparkMax(Constants.FLYWHEEL_MOTOR_ID, MotorType.kBrushless);
     
     private CANEncoder m_flywheelEncoder;
 
@@ -34,11 +35,14 @@ public class Shooter extends SubsystemBase {
         m_flywheelMotor.setIdleMode(IdleMode.kCoast);
         
         m_flywheelEncoder = m_flywheelMotor.getEncoder();
-        // m_flywheelEncoder.setVelocityConversionFactor(11/8);
+        m_flywheelEncoder.setVelocityConversionFactor(11/8);
 
         m_flywheelPID = m_flywheelMotor.getPIDController();
         m_flywheelPID.setP(0.0002);
 
+
+        m_indexMotor.restoreFactoryDefaults();
+        m_indexMotor.setIdleMode(IdleMode.kBrake);
     }
 
     public boolean isFlywheelEnabled() {
@@ -59,6 +63,10 @@ public class Shooter extends SubsystemBase {
 
     public boolean isReadyToShoot() {
         return flywheelEnabled && Math.abs(m_flywheelEncoder.getVelocity() - targetRpm) < Constants.FLYWHEEL_TOLERANCE;
+    }
+
+    public void setIndexer(double speed) {
+        m_indexMotor.set(speed);
     }
 
     @Override

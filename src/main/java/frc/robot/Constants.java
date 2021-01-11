@@ -28,6 +28,7 @@ public final class Constants {
     public static final int SPINNER_MOTOR_ID = 13;
     public static final int OUTPUT_MOTOR_ID = 14;
     public static final int FLYWHEEL_MOTOR_ID = 14;
+    public static final int INDEX_MOTOR_ID = 14;
 
     // Axes
     public static final int THROTTLE_AXIS = 1;
