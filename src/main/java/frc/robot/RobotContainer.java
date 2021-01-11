@@ -99,28 +99,22 @@ public class RobotContainer {
     m_trajConfig.setKinematics(m_drivetrain.getKinematics());
     m_trajConfig.addConstraint(new CentripetalAccelerationConstraint(Constants.AUTO_MAX_CENTRIPETAL_ACCEL));
 
-
     // set up autonomous trajectories
     m_autoChooser.setDefaultOption("None", null);
-    m_autoChooser.addOption("Straight Line", Arrays.asList(new Pose2d(0, 0, new Rotation2d()), new Pose2d(3, 0, new Rotation2d())));
-    m_autoChooser.addOption("Curve",  Arrays.asList(
-      new Pose2d(0, 0, new Rotation2d()), 
-      new Pose2d(2, 2, new Rotation2d()),
-      new Pose2d(3, 2, new Rotation2d())));
-      m_autoChooser.addOption("Bumps",  Arrays.asList(
-        new Pose2d(0, 0, new Rotation2d()), 
-        new Pose2d(1.6, 0.94, Rotation2d.fromDegrees(45)),
-        new Pose2d(3.152, 1.736, new Rotation2d()),
-        new Pose2d(4.484, 1.736, new Rotation2d()),
-        new Pose2d(5.152, 0.942, Rotation2d.fromDegrees(-90)),
-        new Pose2d(4.382, 0, Rotation2d.fromDegrees(-180)),
-        new Pose2d(3.628, 0.942, Rotation2d.fromDegrees(-270)),
-        new Pose2d(2.521, 1.736, Rotation2d.fromDegrees(-180)),
-        new Pose2d(0.526, 1.736, Rotation2d.fromDegrees(-180))
-      ));
+    m_autoChooser.addOption("Straight Line",
+        Arrays.asList(new Pose2d(0, 0, new Rotation2d()), new Pose2d(3, 0, new Rotation2d())));
+    m_autoChooser.addOption("Curve", Arrays.asList(new Pose2d(0, 0, new Rotation2d()),
+        new Pose2d(2, 2, new Rotation2d()), new Pose2d(3, 2, new Rotation2d())));
+    m_autoChooser.addOption("Bumps",
+        Arrays.asList(new Pose2d(0, 0, new Rotation2d()), new Pose2d(1.6, 0.94, Rotation2d.fromDegrees(45)),
+            new Pose2d(3.152, 1.736, new Rotation2d()), new Pose2d(4.484, 1.736, new Rotation2d()),
+            new Pose2d(5.152, 0.942, Rotation2d.fromDegrees(-90)), new Pose2d(4.382, 0, Rotation2d.fromDegrees(-180)),
+            new Pose2d(3.628, 0.942, Rotation2d.fromDegrees(-270)),
+            new Pose2d(2.521, 1.736, Rotation2d.fromDegrees(-180)),
+            new Pose2d(0.526, 1.736, Rotation2d.fromDegrees(-180))));
 
     SmartDashboard.putData(m_autoChooser);
-   
+
     // set default commands
     m_drivetrain.setDefaultCommand(new TankDrive(throttleSupply, turnSupply, m_drivetrain));
     m_controlPanel.setDefaultCommand(new DefaultControlPanel(m_controlPanel, controlPanelSupplier));
@@ -144,7 +138,8 @@ public class RobotContainer {
       m_compressor.setClosedLoopControl(!m_compressor.getClosedLoopControl());
     });
 
-    new JoystickButton(controller, 1).whenPressed(new SetBeltSpeed(m_belt, -0.5)).whenReleased(new SetBeltSpeed(m_belt, 0));
+    new JoystickButton(controller, 1).whenPressed(new SetBeltSpeed(m_belt, -0.5))
+        .whenReleased(new SetBeltSpeed(m_belt, 0));
   }
 
   /**
