@@ -32,10 +32,13 @@ import frc.robot.commands.DefaultControlPanel;
 import frc.robot.commands.DrivePath;
 import frc.robot.commands.Collect;
 import frc.robot.commands.ResetDrivePose;
+import frc.robot.commands.SetBeltSpeed;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.TankDrive;
+import frc.robot.subsystems.Belt;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.PowerCell;
 import frc.robot.subsystems.Shooter;
 import frc.robot.util.JoystickAxis;
@@ -50,9 +53,11 @@ import frc.robot.util.JoystickAxis;
 public class RobotContainer {
 
   final Drivetrain m_drivetrain = new Drivetrain();
-  final PowerCell m_powercell = new PowerCell();
+  final Intake m_intake = new Intake();
+  final Belt m_belt = new Belt();
   final ControlPanel m_controlPanel = new ControlPanel();
   final Shooter m_shooter = new Shooter();
+
   final Compressor m_compressor = new Compressor();
 
   final Joystick controller = new Joystick(0);
@@ -116,12 +121,10 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    intakeTrigger.whileActiveOnce(new Collect(m_powercell));
+    intakeTrigger.whileActiveOnce(new Collect(m_intake));
     shootTrigger.whileActiveOnce(new Shoot(m_shooter));
 
-    new JoystickButton(controller, 1).whileHeld(() -> {
-      new PowerCell().run_belt(-0.5);
-    });
+    new JoystickButton(controller, 1).whenPressed(new SetBeltSpeed(m_belt, -0.5)).whenReleased(new SetBeltSpeed(m_belt, 0));
   }
 
   /**

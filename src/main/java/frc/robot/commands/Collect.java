@@ -1,26 +1,27 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.PowerCell;
 
 public class Collect extends CommandBase {
 
-    private PowerCell m_pPowerCell;
+    private Intake m_intake;
 
-    public Collect(PowerCell pcell) {
+    public Collect(Intake intake) {
         super();
-        m_pPowerCell = pcell;
-        addRequirements(pcell);
+        m_intake = intake;
+        addRequirements(m_intake);
     }
 
     @Override
     public void initialize() {
-       m_pPowerCell.run_intake(0.5);
+       m_intake.run_intake(0.5);
     }
 
     @Override
     public void end(boolean interrupted) {
-        m_pPowerCell.run_intake(0.0);
+        m_intake.run_intake(0.0);
     }
 
   
