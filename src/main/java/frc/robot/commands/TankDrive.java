@@ -24,8 +24,8 @@ public class TankDrive extends CommandBase {
   private final DoubleSupplier m_turn;
   private final DifferentialDriveKinematics m_kinematics;
 
-  private SlewRateLimiter thrLimit = new SlewRateLimiter(5);
-  private SlewRateLimiter turnLimit = new SlewRateLimiter(15);
+  private SlewRateLimiter thrLimit = new SlewRateLimiter(7);
+  private SlewRateLimiter turnLimit = new SlewRateLimiter(30);
 
   /**
    * Creates a new TankDrive command.
