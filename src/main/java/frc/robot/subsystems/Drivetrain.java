@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj.LinearFilter;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -44,15 +43,15 @@ public class Drivetrain extends SubsystemBase {
   private CANEncoder m_leftEncoder;
   private CANEncoder m_rightEncoder;
 
-  private PIDController m_leftController = new PIDController(0.4, 0, 0);
-  private PIDController m_rightController = new PIDController(0.4, 0, 0);
+  private PIDController m_leftController;
+  private PIDController m_rightController;
 
-  private SimpleMotorFeedforward m_leftFF = new SimpleMotorFeedforward(0.1765, 3.3, 0.341);
-  private SimpleMotorFeedforward m_rightFF = new SimpleMotorFeedforward(0.1835, 3.24, 0.3645);
+  private SimpleMotorFeedforward m_leftFF;
+  private SimpleMotorFeedforward m_rightFF;
 
-  private DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(Constants.DRIVE_TRACK_WIDTH);
+  private DifferentialDriveKinematics m_kinematics;
 
-  private DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(getGyroRotation());
+  private DifferentialDriveOdometry m_odometry;
   
   /**
    * Creates a new Drivetrain, configuring all involved motors and encoders.
@@ -71,8 +70,8 @@ public class Drivetrain extends SubsystemBase {
     m_leftMotor.restoreFactoryDefaults();
     m_leftMotor_1.restoreFactoryDefaults();
 
-    m_leftMotor.setSmartCurrentLimit(40);
-    m_leftMotor_1.setSmartCurrentLimit(40);
+    m_leftMotor.setSmartCurrentLimit(Constants.DRIVE_MOTOR_CURRENT_LIMIT);
+    m_leftMotor_1.setSmartCurrentLimit(Constants.DRIVE_MOTOR_CURRENT_LIMIT);
 
     m_leftMotor.setIdleMode(IdleMode.kBrake);
     m_leftMotor_1.setIdleMode(IdleMode.kBrake);
@@ -82,8 +81,8 @@ public class Drivetrain extends SubsystemBase {
     m_rightMotor.restoreFactoryDefaults();
     m_rightMotor_1.restoreFactoryDefaults();
 
-    m_rightMotor.setSmartCurrentLimit(40);
-    m_rightMotor_1.setSmartCurrentLimit(40);
+    m_rightMotor.setSmartCurrentLimit(Constants.DRIVE_MOTOR_CURRENT_LIMIT);
+    m_rightMotor_1.setSmartCurrentLimit(Constants.DRIVE_MOTOR_CURRENT_LIMIT);
 
     m_rightMotor.setIdleMode(IdleMode.kBrake);
     m_rightMotor_1.setIdleMode(IdleMode.kBrake);
@@ -103,6 +102,16 @@ public class Drivetrain extends SubsystemBase {
 
     m_rightEncoder.setVelocityConversionFactor(conversionFactor/60);
     m_rightEncoder.setPositionConversionFactor(conversionFactor);
+    
+    m_leftController = new PIDController(0.4, 0, 0);
+    m_rightController = new PIDController(0.4, 0, 0);
+    
+    m_leftFF = new SimpleMotorFeedforward(0.1765, 3.3, 0.341);
+    m_rightFF = new SimpleMotorFeedforward(0.1835, 3.24, 0.3645);
+    
+    m_kinematics = new DifferentialDriveKinematics(Constants.DRIVE_TRACK_WIDTH);
+    
+    m_odometry = new DifferentialDriveOdometry(getGyroRotation());
   }
 
   /**

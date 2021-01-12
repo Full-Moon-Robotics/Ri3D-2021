@@ -24,8 +24,8 @@ public class TankDrive extends CommandBase {
   private final DoubleSupplier m_turn;
   private final DifferentialDriveKinematics m_kinematics;
 
-  private SlewRateLimiter thrLimit = new SlewRateLimiter(7);
-  private SlewRateLimiter turnLimit = new SlewRateLimiter(30);
+  private SlewRateLimiter thrLimit;
+  private SlewRateLimiter turnLimit;
 
   /**
    * Creates a new TankDrive command.
@@ -40,6 +40,9 @@ public class TankDrive extends CommandBase {
     m_throttle = throttle;
     m_turn = turn;
     m_kinematics = drivetrain.getKinematics();
+    
+    thrLimit = new SlewRateLimiter(7);
+    turnLimit = new SlewRateLimiter(30);
     addRequirements(m_drivetrain);
   }
 

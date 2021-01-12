@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class JoystickAxis {
 
-    private double m_rate = 1.0;
-    private double m_expo = 0.0;
-    private double m_superRate = 0.0;
-    private double m_deadband = 0.01;
+    private double m_rate;
+    private double m_expo;
+    private double m_superRate;
+    private double m_deadband;
 
     private Joystick m_controller;
     private int m_axis;
