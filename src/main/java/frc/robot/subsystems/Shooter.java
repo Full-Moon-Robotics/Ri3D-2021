@@ -45,6 +45,7 @@ public class Shooter extends SubsystemBase {
         m_indexMotor = new CANSparkMax(Constants.INDEX_MOTOR_ID, MotorType.kBrushed);
         m_indexMotor.restoreFactoryDefaults();
         m_indexMotor.setIdleMode(IdleMode.kBrake);
+        m_indexMotor.setInverted(true);
 
         m_flywheelEncoder = m_flywheelMotor.getEncoder();
         m_flywheelEncoder.setVelocityConversionFactor(1.375);
