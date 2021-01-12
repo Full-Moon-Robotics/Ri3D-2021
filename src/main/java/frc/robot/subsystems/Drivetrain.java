@@ -43,15 +43,15 @@ public class Drivetrain extends SubsystemBase {
   private CANEncoder m_leftEncoder;
   private CANEncoder m_rightEncoder;
 
-  private PIDController m_leftController = new PIDController(0.4, 0, 0);
-  private PIDController m_rightController = new PIDController(0.4, 0, 0);
+  private PIDController m_leftController;
+  private PIDController m_rightController;
 
-  private SimpleMotorFeedforward m_leftFF = new SimpleMotorFeedforward(0.1765, 3.3, 0.341);
-  private SimpleMotorFeedforward m_rightFF = new SimpleMotorFeedforward(0.1835, 3.24, 0.3645);
+  private SimpleMotorFeedforward m_leftFF;
+  private SimpleMotorFeedforward m_rightFF;
 
-  private DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(Constants.DRIVE_TRACK_WIDTH);
+  private DifferentialDriveKinematics m_kinematics;
 
-  private DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(getGyroRotation());
+  private DifferentialDriveOdometry m_odometry;
   
   /**
    * Creates a new Drivetrain, configuring all involved motors and encoders.
@@ -102,6 +102,16 @@ public class Drivetrain extends SubsystemBase {
 
     m_rightEncoder.setVelocityConversionFactor(conversionFactor/60);
     m_rightEncoder.setPositionConversionFactor(conversionFactor);
+    
+    m_leftController = new PIDController(0.4, 0, 0);
+    m_rightController = new PIDController(0.4, 0, 0);
+    
+    m_leftFF = new SimpleMotorFeedforward(0.1765, 3.3, 0.341);
+    m_rightFF = new SimpleMotorFeedforward(0.1835, 3.24, 0.3645);
+    
+    m_kinematics = new DifferentialDriveKinematics(Constants.DRIVE_TRACK_WIDTH);
+    
+    m_odometry = new DifferentialDriveOdometry(getGyroRotation());
   }
 
   /**
