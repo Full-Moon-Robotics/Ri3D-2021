@@ -70,8 +70,8 @@ public class Drivetrain extends SubsystemBase {
     m_leftMotor.restoreFactoryDefaults();
     m_leftMotor_1.restoreFactoryDefaults();
 
-    m_leftMotor.setSmartCurrentLimit(40);
-    m_leftMotor_1.setSmartCurrentLimit(40);
+    m_leftMotor.setSmartCurrentLimit(Constants.DRIVE_MOTOR_CURRENT_LIMIT);
+    m_leftMotor_1.setSmartCurrentLimit(Constants.DRIVE_MOTOR_CURRENT_LIMIT);
 
     m_leftMotor.setIdleMode(IdleMode.kBrake);
     m_leftMotor_1.setIdleMode(IdleMode.kBrake);
@@ -81,8 +81,8 @@ public class Drivetrain extends SubsystemBase {
     m_rightMotor.restoreFactoryDefaults();
     m_rightMotor_1.restoreFactoryDefaults();
 
-    m_rightMotor.setSmartCurrentLimit(40);
-    m_rightMotor_1.setSmartCurrentLimit(40);
+    m_rightMotor.setSmartCurrentLimit(Constants.DRIVE_MOTOR_CURRENT_LIMIT);
+    m_rightMotor_1.setSmartCurrentLimit(Constants.DRIVE_MOTOR_CURRENT_LIMIT);
 
     m_rightMotor.setIdleMode(IdleMode.kBrake);
     m_rightMotor_1.setIdleMode(IdleMode.kBrake);

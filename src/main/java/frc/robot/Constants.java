@@ -50,6 +50,8 @@ public final class Constants {
     public static final double AUTO_MAX_VELOCITY = 1;
     public static final double AUTO_MAX_ACCEL = 0.5;
     public static final double AUTO_MAX_CENTRIPETAL_ACCEL = 1;
+    
+    public static final int DRIVE_MOTOR_CURRENT_LIMIT = 40;
 
     // Shooter
     public static final double FLYWHEEL_TOLERANCE = 200;
