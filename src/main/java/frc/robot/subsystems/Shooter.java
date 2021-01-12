@@ -47,7 +47,7 @@ public class Shooter extends SubsystemBase {
         m_indexMotor.setIdleMode(IdleMode.kBrake);
 
         m_flywheelEncoder = m_flywheelMotor.getEncoder();
-        m_flywheelEncoder.setVelocityConversionFactor(11/8);
+        m_flywheelEncoder.setVelocityConversionFactor(1.375);
 
         m_flywheelPID = m_flywheelMotor.getPIDController();
         m_flywheelPID.setP(0.000558);
