@@ -42,9 +42,6 @@ public final class Constants {
     public static final double DRIVE_WHEEL_DIAMETER = 3.961;
     public static final double DRIVE_TRACK_WIDTH = 0.7;
 
-    public static final double DRIVE_KS = 0.18;
-    public static final double DRIVE_KV = 3.28;
-
     public static final double DRIVE_TOP_SPEED = 3.6;
 
     public static final double AUTO_MAX_VELOCITY = 1;
@@ -59,5 +56,5 @@ public final class Constants {
     public static final double FLYWHEEL_KV = 0.0973;
 
     // Intake
-    public static final double INTAKE_SPEED = 0.8;
+    public static final double INTAKE_SPEED = 0.7;
 }

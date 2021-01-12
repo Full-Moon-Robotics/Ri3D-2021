@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.LinearFilter;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 
@@ -32,8 +31,6 @@ import frc.robot.Constants;
 public class Drivetrain extends SubsystemBase {
 
   private AnalogGyro m_gyro = new AnalogGyro(0);
-
-  private LinearFilter m_gyroFilter = LinearFilter.singlePoleIIR(0.06, 0.02);
 
   private CANSparkMax m_leftMotor;
   private CANSparkMax m_leftMotor_1;
