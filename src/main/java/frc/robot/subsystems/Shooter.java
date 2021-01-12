@@ -17,16 +17,16 @@ import frc.robot.Constants;
  */
 public class Shooter extends SubsystemBase {
 
-    private CANSparkMax m_flywheelMotor = new CANSparkMax(Constants.FLYWHEEL_MOTOR_ID, MotorType.kBrushless);
-    private CANSparkMax m_indexMotor = new CANSparkMax(Constants.FLYWHEEL_MOTOR_ID, MotorType.kBrushless);
+    private CANSparkMax m_flywheelMotor;
+    private CANSparkMax m_indexMotor;
     
     private CANEncoder m_flywheelEncoder;
 
     private CANPIDController m_flywheelPID;
-    private SimpleMotorFeedforward m_flywheelFF = new SimpleMotorFeedforward(Constants.FLYWHEEL_KS, Constants.FLYWHEEL_KV);
+    private SimpleMotorFeedforward m_flywheelFF;
 
-    private boolean flywheelEnabled = false;
-    private double targetRpm = 0;
+    private boolean flywheelEnabled;
+    private double targetRpm;
 
     /**
      * Creates a new Shooter, preparing the flywheel motor and PID
@@ -36,18 +36,24 @@ public class Shooter extends SubsystemBase {
     public Shooter() {
         super();
 
+        m_flywheelMotor = new CANSparkMax(Constants.FLYWHEEL_MOTOR_ID, MotorType.kBrushless);
         m_flywheelMotor.restoreFactoryDefaults();
         m_flywheelMotor.setIdleMode(IdleMode.kCoast);
         
+        m_indexMotor = new CANSparkMax(Constants.FLYWHEEL_MOTOR_ID, MotorType.kBrushless);
+        m_indexMotor.restoreFactoryDefaults();
+        m_indexMotor.setIdleMode(IdleMode.kBrake);
+
         m_flywheelEncoder = m_flywheelMotor.getEncoder();
         m_flywheelEncoder.setVelocityConversionFactor(11/8);
 
         m_flywheelPID = m_flywheelMotor.getPIDController();
         m_flywheelPID.setP(0.0002);
-
-
-        m_indexMotor.restoreFactoryDefaults();
-        m_indexMotor.setIdleMode(IdleMode.kBrake);
+        
+        m_flywheelFF = new SimpleMotorFeedforward(Constants.FLYWHEEL_KS, Constants.FLYWHEEL_KV);
+        
+        flywheelEnabled = false;
+        targetRpm = 0;
     }
 
     public boolean isFlywheelEnabled() {
