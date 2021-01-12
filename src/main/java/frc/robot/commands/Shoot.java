@@ -39,7 +39,7 @@ public class Shoot extends CommandBase {
 
     /**
      *  Adjusts the shooter toward the target rotations per minute.
-     *  Indexes if the flywheel is ready to shoot; otherwise waits until next cycle.
+     *  Indexes if the enough time has passed since the last shot; otherwise waits until next cycle.
      */
     @Override
     public void execute() {

@@ -89,7 +89,7 @@ public class Shooter extends SubsystemBase {
         return flywheelEnabled && Math.abs(m_flywheelEncoder.getVelocity() - targetRpm) < Constants.FLYWHEEL_TOLERANCE;
     }
     /**
-     * Sets a new angular velocity to run the motor at.
+     * Sets a new angular velocity to run the indexing motor at.
      * Ranges from -1.0 to 1.0, with 0 being no rotation.
      * 
      * @param speed the intended direction (sign) and percent of maximum motor speed (0 to 1) 
