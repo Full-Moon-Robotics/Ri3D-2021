@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
@@ -10,6 +11,7 @@ import frc.robot.subsystems.Shooter;
 public class Shoot extends CommandBase {
 
     private Shooter m_shooter;
+    private Timer m_spinupTimer;
 
     /**
      * Creates a new Shoot.
@@ -20,6 +22,7 @@ public class Shoot extends CommandBase {
     public Shoot(Shooter shooter) {
         super();
         m_shooter = shooter;
+        m_spinupTimer = new Timer();
         addRequirements(shooter);
     }
 
@@ -30,6 +33,8 @@ public class Shoot extends CommandBase {
     @Override
     public void initialize() {
         m_shooter.setFlywheelEnabled(true);
+        m_spinupTimer.reset();
+        m_spinupTimer.start();
     }
 
     /**
@@ -39,7 +44,7 @@ public class Shoot extends CommandBase {
     @Override
     public void execute() {
         m_shooter.setTargetRpm(SmartDashboard.getNumber("shooter_target_rpm", 0));
-        if(m_shooter.isReadyToShoot()) {
+        if(m_spinupTimer.get() > 1.0) {
             // index
             m_shooter.setIndexer(0.5);
         } else {
@@ -56,6 +61,8 @@ public class Shoot extends CommandBase {
     public void end(boolean interrupted) {
         m_shooter.setFlywheelEnabled(false);
         m_shooter.setIndexer(-0.2);
+        m_spinupTimer.stop();
+        m_spinupTimer.reset();
     }
     
     /**
