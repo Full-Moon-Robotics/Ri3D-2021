@@ -40,12 +40,13 @@ public class Shooter extends SubsystemBase {
         m_flywheelMotor.restoreFactoryDefaults();
         m_flywheelMotor.setIdleMode(IdleMode.kCoast);
         m_flywheelMotor.setInverted(true);
-        m_flywheelMotor.setSmartCurrentLimit(40);
+        m_flywheelMotor.setSmartCurrentLimit(60);
         
         m_indexMotor = new CANSparkMax(Constants.INDEX_MOTOR_ID, MotorType.kBrushed);
         m_indexMotor.restoreFactoryDefaults();
+        m_indexMotor.setInverted(false);
+        m_indexMotor.setSmartCurrentLimit(20);
         m_indexMotor.setIdleMode(IdleMode.kBrake);
-        m_indexMotor.setInverted(true);
 
         m_flywheelEncoder = m_flywheelMotor.getEncoder();
         m_flywheelEncoder.setVelocityConversionFactor(1.375);
@@ -59,10 +60,7 @@ public class Shooter extends SubsystemBase {
         targetRpm = 0;
 
 
-        m_indexMotor.restoreFactoryDefaults();
-        m_indexMotor.setInverted(true);
-        m_indexMotor.setSmartCurrentLimit(20);
-        m_indexMotor.setIdleMode(IdleMode.kBrake);
+        
     }
 
     public boolean isFlywheelEnabled() {

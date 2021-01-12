@@ -45,8 +45,13 @@ public class Shoot extends CommandBase {
     public void execute() {
         m_shooter.setTargetRpm(SmartDashboard.getNumber("shooter_target_rpm", 0));
         if(m_spinupTimer.get() > 1.0) {
+            if(m_shooter.isReadyToShoot()) {
+                m_shooter.setIndexer(0.5);
+            } else {
+                m_shooter.setIndexer(-0.2);
+            }
             // index
-            m_shooter.setIndexer(0.5);
+           
         } else {
             // stop indexing
             m_shooter.setIndexer(0);

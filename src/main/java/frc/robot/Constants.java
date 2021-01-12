@@ -54,7 +54,7 @@ public final class Constants {
     public static final int DRIVE_MOTOR_CURRENT_LIMIT = 40;
 
     // Shooter
-    public static final double FLYWHEEL_TOLERANCE = 200;
+    public static final double FLYWHEEL_TOLERANCE = 600;
     public static final double FLYWHEEL_KS = 0.43;
     public static final double FLYWHEEL_KV = 0.0973;
 
