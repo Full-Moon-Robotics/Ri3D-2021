@@ -21,7 +21,7 @@ import frc.robot.subsystems.ControlPanel;
 public class DefaultControlPanel extends CommandBase {
   private final ControlPanel m_controlPanel;
   private final DoubleSupplier m_axis; 
-  private final Timer debounceTimer = new Timer();
+  private final Timer debounceTimer;
 
   /**
    * Creates a new DefaultControlPanel.
@@ -35,6 +35,7 @@ public class DefaultControlPanel extends CommandBase {
 
     m_controlPanel = controlPanel;
     m_axis = axis;
+    debounceTimer = new Timer();
     addRequirements(controlPanel);
   }
 
