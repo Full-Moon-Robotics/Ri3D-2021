@@ -38,6 +38,8 @@ public class Shooter extends SubsystemBase {
 
         m_flywheelMotor.restoreFactoryDefaults();
         m_flywheelMotor.setIdleMode(IdleMode.kCoast);
+        m_flywheelMotor.setInverted(true);
+        m_flywheelMotor.setSmartCurrentLimit(40);
         
         m_flywheelEncoder = m_flywheelMotor.getEncoder();
         m_flywheelEncoder.setVelocityConversionFactor(11/8);
@@ -47,6 +49,8 @@ public class Shooter extends SubsystemBase {
 
 
         m_indexMotor.restoreFactoryDefaults();
+        m_indexMotor.setInverted(true);
+        m_indexMotor.setSmartCurrentLimit(20);
         m_indexMotor.setIdleMode(IdleMode.kBrake);
     }
 
@@ -91,7 +95,7 @@ public class Shooter extends SubsystemBase {
     @Override
     public void periodic() {
         if(flywheelEnabled) {
-            double ff = m_flywheelFF.calculate(targetRpm);
+            double ff = m_flywheelFF.calculate(targetRpm/60.0);
             m_flywheelPID.setReference(targetRpm, ControlType.kVelocity, 0, ff, CANPIDController.ArbFFUnits.kVoltage);
         } else {
             m_flywheelMotor.stopMotor();
