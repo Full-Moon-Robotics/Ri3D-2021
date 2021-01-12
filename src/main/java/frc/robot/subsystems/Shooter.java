@@ -50,7 +50,7 @@ public class Shooter extends SubsystemBase {
         m_flywheelEncoder.setVelocityConversionFactor(11/8);
 
         m_flywheelPID = m_flywheelMotor.getPIDController();
-        m_flywheelPID.setP(0.0002);
+        m_flywheelPID.setP(0.000558);
         
         m_flywheelFF = new SimpleMotorFeedforward(Constants.FLYWHEEL_KS, Constants.FLYWHEEL_KV);
         
