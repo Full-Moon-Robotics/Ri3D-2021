@@ -42,7 +42,7 @@ public class Shooter extends SubsystemBase {
         m_flywheelMotor.setInverted(true);
         m_flywheelMotor.setSmartCurrentLimit(40);
         
-        m_indexMotor = new CANSparkMax(Constants.FLYWHEEL_MOTOR_ID, MotorType.kBrushless);
+        m_indexMotor = new CANSparkMax(Constants.INDEX_MOTOR_ID, MotorType.kBrushed);
         m_indexMotor.restoreFactoryDefaults();
         m_indexMotor.setIdleMode(IdleMode.kBrake);
 
