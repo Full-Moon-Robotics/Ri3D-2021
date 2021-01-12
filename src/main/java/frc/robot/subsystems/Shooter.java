@@ -85,7 +85,7 @@ public class Shooter extends SubsystemBase {
     }
 
     /**
-     * Every period, updates the flywheel feed forward values for the encoder and updates statistics.
+     * Every period, updates the flywheel feed forward values for the controller and updates statistics.
      * Stops the motor if the flywheel is disabled.
      */
     @Override
